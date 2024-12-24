@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 20:45:16 by ilhasnao          #+#    #+#             */
-/*   Updated: 2024/12/20 17:56:41 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2024/12/23 18:46:34 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "libft/libft.h"
 
 typedef struct s_stack

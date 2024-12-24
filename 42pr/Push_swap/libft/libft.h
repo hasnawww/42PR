@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 07:38:04 by ilhasnao          #+#    #+#             */
-/*   Updated: 2024/12/20 17:40:44 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2024/12/23 19:04:57 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 
 # include <stdlib.h>
+# include "../push_swap.h"
 
 typedef struct s_list
 {
