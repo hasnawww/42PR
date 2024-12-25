@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:03:17 by ilhasnao          #+#    #+#             */
-/*   Updated: 2024/12/23 19:12:08 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2024/12/24 14:33:29 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,9 @@ int	main(int ac, char **av)
 		a = assign(a, ft_atoi(av[i]));
 		i++;
 	}
+	print_stack(a);
+	swap_sa(&a);
+	write(1, "new_list : ", 11);
 	print_stack(a);
 	free_lbail(a);
 	return (0);
