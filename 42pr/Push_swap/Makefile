@@ -6,22 +6,61 @@
 #    By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/24 14:33:52 by ilhasnao          #+#    #+#              #
-#    Updated: 2024/12/24 15:21:13 by ilhasnao         ###   ########.fr        #
+#    Updated: 2024/12/30 02:52:55 by ilhasnao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address,leak
+LIBFT = libft/
+RM = rm -f
 
-SRC_1 = main.c 
+SRC_1 = src/main.c 
 
-SRC_2 = ft_lstsize.c main.c swap_pa.c swap_ra.c swap_rra.c swap_sa.c
+SRC_2 = src/ft_lstsize.c \
+		src/swap_p.c \
+		src/swap_ra.c \
+		src/swap_rra.c \
+		src/swap_sa.c \
+		src/ft_lstadd_front_bonus.c \
+		src/sort_three.c \
+		src/sort_four.c \
+		src/ft_lstadd_back_bonus.c \
+		src/ft_lstnew_bonus.c \
+		src/sort_five.c
 
-OBJS = $(SRC:.c=.o)
+OBJ_1 = $(SRC_1:.c=.o)
+OBJ_2 = $(SRC_2:.c=.o)
 
-all: $(NAME)
+INCLUDE = -L ./libft -lft
 
-$(NAME): $(OBJS)
+DEF_COLOR = \033[0m
+PINK = \033[5;95m
+GREEN = \033[1;92m
+CYAN = \033[1;96m
+
+%.o: %.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo "$(PINK)I'm compiling hbibi!$(DEF_COLOR)"
 	
-OBJ_1
+$(NAME): $(OBJ_1) ${OBJ_2}
+		@make -C $(LIBFT)
+		@${CC} ${CFLAGS} ${OBJ_1} ${OBJ_2} -o ${NAME} ${INCLUDE}
+		@echo "$(GREEN)Its compiled hbibi!$(DEF_COLOR)"
+
+all: ${NAME}
+
+clean:
+		@${RM} ${OBJ_1} ${OBJ_2} ${NAME}
+		@cd ${LIBFT} && $(MAKE) clean
+		@echo "$(CYAN)I'm cleaning hbibi!$< $(DEF_COLOR)"
+
+fclean: clean
+		@${RM} ${NAME}
+		@cd ${LIBFT} && $(MAKE) fclean
+		@echo "$(CYAN)I'm cleaning hbibi!$< $(DEF_COLOR)"
+
+re: clean all
+
+.PHONY: all clean fclean re bonus

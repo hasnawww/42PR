@@ -1,42 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/14 20:53:12 by ilhasnao          #+#    #+#             */
-/*   Updated: 2024/12/20 17:40:22 by ilhasnao         ###   ########.fr       */
+/*   Created: 2024/11/15 11:01:14 by ilhasnao          #+#    #+#             */
+/*   Updated: 2024/12/30 01:49:13 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../push_swap.h"
 
-int	lstsize(t_stack *lst)
+void	ft_lstadd_back(t_stack **lst, t_stack *new)
 {
-	int		i;
-
-	i = 0;
-	while(lst)
+	if (!new)
 	{
-		lst = lst->next;
-		i++;
+		return ;
 	}
-	return (i);
-}
-
-int	main()
-{
-	t_stack *A;
-	t_stack *B;
-	t_stack *C;
-
-	A = malloc(sizeof(t_stack));
-	B = malloc(sizeof(t_stack));
-	C = malloc(sizeof(t_stack));
-	A->next = B;
-	B->next = C;
-	C->next = NULL;
-	printf("%d", lstsize(A));
-	return (0);
+	if (!*lst)
+	{
+		*lst = new;
+		return ;
+	}
+	while (*lst != NULL)
+	{
+		lst = &(*lst)->next;
+	}
+	*lst = new;
 }

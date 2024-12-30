@@ -1,31 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
+/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/15 11:01:14 by ilhasnao          #+#    #+#             */
-/*   Updated: 2024/12/15 19:29:18 by ilhasnao         ###   ########.fr       */
+/*   Created: 2024/11/15 08:14:01 by ilhasnao          #+#    #+#             */
+/*   Updated: 2024/12/27 16:20:59 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../push_swap.h"
 
-void	ft_lstadd_back(b_list **lst, b_list *new)
+void	ft_lstadd_front2(t_stack **lst, t_stack *new)
 {
-	if (!new)
-	{
+	if (!new || !lst)
 		return ;
-	}
-	if (!*lst)
-	{
-		*lst = new;
-		return ;
-	}
-	while (*lst != NULL)
-	{
-		lst = &(*lst)->next;
-	}
+	new->next = *lst;
 	*lst = new;
 }

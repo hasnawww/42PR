@@ -6,11 +6,11 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 03:07:42 by ilhasnao          #+#    #+#             */
-/*   Updated: 2024/12/20 17:40:22 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2024/12/30 02:56:00 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../push_swap.h"
 
 void free_list(t_stack *list)
 {
@@ -28,10 +28,10 @@ void print_list(t_stack *list)
 {
 	while (list)
 	{
-		printf("%d -> ", list->data);
+		ft_putnbr_fd(list->data, 2);
 		list = list->next;
 	}
-	printf("NULL\n");
+	ft_putstr_fd("NULL\n", 2);
 }
 
 void	swap_ra(t_stack **list)
@@ -43,44 +43,18 @@ void	swap_ra(t_stack **list)
 	begin = (*list);
 	first_val = begin->data;
 	temp = *list;
-	printf("avant: %d\n", begin->data);
+	// ft_putnbr_fd(begin->data, 2);
 	while (temp->next)
 	{
-		printf("pendant: %d\n", begin->data);
+		// ft_putnbr_fd(begin->data, 2);
 		temp->data = temp->next->data;
 		if (temp->next->next == NULL)
 		{
 			temp->next->data = first_val;
-			printf("in if: %d\n", begin->data);
+			// ft_putnbr_fd(begin->data, 2);
 			break;
 		}
 		temp = temp->next;
 	}
-}
-
-int	main()
-{
-	t_stack *A;
-	t_stack *B;
-	t_stack *C;
-	
-	A = malloc(sizeof(t_stack));
-	B = malloc(sizeof(t_stack));
-	C = malloc(sizeof(t_stack));
-	A->data = 3;
-	A->next = B;
-	B->data = 2;
-	B->next = C;
-	C->data = 1;
-	C->next = NULL;
-	
-	printf("Avant: ");
-	print_list(A);
-
-	swap_ra(&A);
-
-	printf("Après: ");
-	print_list(A);
-	free_list(A);
-	return (0);
+	ft_putstr_fd("ra\n", 1);
 }

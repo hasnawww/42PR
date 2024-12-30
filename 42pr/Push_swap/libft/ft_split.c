@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 06:57:00 by ilhasnao          #+#    #+#             */
-/*   Updated: 2024/11/18 10:17:34 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2024/12/30 01:16:49 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ static size_t	word_len(char const	*s, char c)
 
 	j = 0;
 	while (s[j] && s[j] != c)
-	{
 		j++;
-	}
 	return (j);
 }
 
@@ -75,6 +73,35 @@ char	**ft_split(char const *s, char c)
 	result[j] = NULL;
 	return (result);
 }
+
+// char	**ft_split(char const *s, char c)
+// {
+// 	char		**result;
+// 	size_t		len;
+// 	size_t		i;
+// 	size_t		j;
+
+// 	i = 0;
+// 	j = 1;
+// 	result = malloc(sizeof(char *) * (count_words(s, c) + 1));
+// 	// result[0] = "./push_swap";
+// 	if (!result || !s)
+// 		return (NULL);
+// 	while (s[i] != '\0')
+// 	{
+// 		while (s[i] != '\0' && s[i] == c)
+// 			i++;
+// 		len = word_len(&s[i], c);
+// 		if (s[i] != '\0')
+// 		{
+// 			result[j] = ft_substr(s, i, len);
+// 			j++;
+// 			i = i + len;
+// 		}
+// 	}
+// 	result[j] = NULL;
+// 	return (result);
+// }
 
 // #include <stdio.h>
 // void print_split(char **result)

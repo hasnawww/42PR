@@ -6,23 +6,23 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 07:31:32 by ilhasnao          #+#    #+#             */
-/*   Updated: 2024/12/15 19:29:18 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2024/12/30 01:49:25 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "libft.h"
+#include "../push_swap.h"
 
-b_list	*ft_lstnew(void *content)
+t_stack	*ft_lstnew(int data)
 {
-	b_list	*new_element;
+	t_stack	*new_element;
 
-	new_element = malloc(sizeof(b_list));
+	new_element = malloc(sizeof(t_stack));
 	if (!new_element)
 	{
 		return (NULL);
 	}
-	new_element->content = content;
+	new_element->data = data;
 	new_element->next = NULL;
 	return (new_element);
 }

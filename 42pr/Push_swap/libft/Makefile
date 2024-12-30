@@ -6,7 +6,7 @@
 #    By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/11 08:23:19 by ilhasnao          #+#    #+#              #
-#    Updated: 2024/11/23 13:46:21 by ilhasnao         ###   ########.fr        #
+#    Updated: 2024/12/25 16:59:06 by ilhasnao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,19 +32,19 @@ BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	ar rcs $(NAME) $(OBJS)
+	@ar rcs $(NAME) $(OBJS)
 
 bonus: $(OBJS) $(BONUS_OBJS)
-	ar rcs $(NAME) $(BONUS_OBJS)
+	@ar rcs $(NAME) $(BONUS_OBJS)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS) $(BONUS_OBJS)
+	@rm -f $(OBJS) $(BONUS_OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 

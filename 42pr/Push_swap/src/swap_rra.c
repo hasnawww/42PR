@@ -6,11 +6,11 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 22:22:17 by ilhasnao          #+#    #+#             */
-/*   Updated: 2024/12/20 17:40:22 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2024/12/30 02:56:15 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../push_swap.h"
 
 void swap_rra(t_stack **list)
 {
@@ -28,25 +28,6 @@ void swap_rra(t_stack **list)
 	second_last->next = NULL;
     current->next = *list;
 	*list = current;
+	ft_putstr_fd("rra\n", 1);
 }
 
-int	main()
-{
-	t_stack *A;
-	t_stack *B;
-	t_stack *C;
-
-	A = malloc(sizeof(t_stack));
-	B = malloc(sizeof(t_stack));
-	C = malloc(sizeof(t_stack));
-	A->data = 7;
-	A->next = B;
-	B->data = 5;
-	B->next = C;
-	C->data = 9;
-	C->next = NULL;
-	printf("avant: %d\n", A->data);
-	swap_rra(&A);
-	printf("apres: %d", A->data);
-	return (0);
-}
