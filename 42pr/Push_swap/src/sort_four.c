@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 23:36:32 by ilhasnao          #+#    #+#             */
-/*   Updated: 2024/12/30 02:51:37 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2024/12/30 23:56:09 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,14 @@ void push_smallest(t_stack **a, t_stack **b)
 	}
 	else
 	{
-		printf("jousuila");
+		// printf("jousuila");
 		while ((*a)->data != smallest)
+		{
+			printf("value a->data = %ld\n", (*a)->data);
 			swap_rra(a);
+		}
 	}
-	printf("value a = %ld\n", (*a)->data);
+	// printf("value a = %ld\n", (*a)->data);
 	swap_pb(a, b);
 }
 

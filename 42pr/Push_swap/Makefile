@@ -6,7 +6,7 @@
 #    By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/24 14:33:52 by ilhasnao          #+#    #+#              #
-#    Updated: 2024/12/30 02:52:55 by ilhasnao         ###   ########.fr        #
+#    Updated: 2024/12/30 23:42:46 by ilhasnao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ SRC_2 = src/ft_lstsize.c \
 		src/sort_four.c \
 		src/ft_lstadd_back_bonus.c \
 		src/ft_lstnew_bonus.c \
-		src/sort_five.c
+		src/sort_five.c \
+		src/sort_hundred.c
 
 OBJ_1 = $(SRC_1:.c=.o)
 OBJ_2 = $(SRC_2:.c=.o)

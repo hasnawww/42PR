@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 02:50:06 by ilhasnao          #+#    #+#             */
-/*   Updated: 2024/12/30 02:54:51 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2024/12/30 22:37:36 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,3 +21,4 @@ void	sort_five(t_stack **a, t_stack **b)
 	swap_pa(a, b);
 	swap_pa(a, b);
 }
+

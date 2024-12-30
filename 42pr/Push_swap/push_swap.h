@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 20:45:16 by ilhasnao          #+#    #+#             */
-/*   Updated: 2024/12/30 02:53:37 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2024/12/31 00:02:43 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ void	sort_five(t_stack **a, t_stack **b);
 void push_smallest(t_stack **a, t_stack **b);
 int	adress_to(t_stack **list, int index);
 int	find_smallest(t_stack **list);
+void sort_numbers(t_stack **a, t_stack **b);
 
 #endif

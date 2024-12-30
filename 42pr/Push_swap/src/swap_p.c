@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:40:42 by ilhasnao          #+#    #+#             */
-/*   Updated: 2024/12/30 02:55:47 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2024/12/30 23:47:39 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	swap_pa(t_stack **lista, t_stack **listb)
 		return ;
 	*listb = (*listb)->next;
 	ft_lstadd_front2(lista, new);
-	ft_putstr_fd("pa\n", 1);
+	// ft_putstr_fd("pa\n", 1);
 }
 
 void	swap_pb(t_stack **lista, t_stack **listb)
@@ -33,5 +33,5 @@ void	swap_pb(t_stack **lista, t_stack **listb)
 		return ;
 	*lista = (*lista)->next;
 	ft_lstadd_front2(listb, new);
-	ft_putstr_fd("pb\n", 2);
+	// ft_putstr_fd("pb\n", 2);
 }

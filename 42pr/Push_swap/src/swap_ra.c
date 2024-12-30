@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 03:07:42 by ilhasnao          #+#    #+#             */
-/*   Updated: 2024/12/30 02:56:00 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2024/12/30 23:43:47 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,5 @@ void	swap_ra(t_stack **list)
 		}
 		temp = temp->next;
 	}
-	ft_putstr_fd("ra\n", 1);
+	// ft_putstr_fd("ra\n", 1);
 }
