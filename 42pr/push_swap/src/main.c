@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:03:17 by ilhasnao          #+#    #+#             */
-/*   Updated: 2024/12/31 00:03:00 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/01/06 03:04:12 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,16 +116,16 @@ void	ft_fill(t_stack **a, char **av)
 		ft_lstadd_back(a, ft_lstnew(ft_atoi(av[i++])));
 }
 
-void	free_lbail(t_stack **a)
-{
-	t_stack	*temp;
-	while (*a)
-	{
-		temp = *a;
-		*a = (*a)->next;
-		free(temp);
-	}
-}
+// void	free_lbail(t_stack **a)
+// {
+// 	t_stack	*temp;
+// 	while (*a)
+// 	{
+// 		temp = *a;
+// 		*a = (*a)->next;
+// 		free(temp);
+// 	}
+// }
 void	dree_split(char **result)
 {
 	int	i;
@@ -146,47 +146,25 @@ void	ft_sprocess(t_stack **a, char **av)
 
 int	main(int ac, char **av)
 {
-	int	i;
-	int j;
-	t_stack *a;
-	t_stack *b;
+	// int	i;
+	t_nodes	*ab;
 
-	i = 1;
-	j = 0;
-	a = NULL;
-	b = NULL;
+	// i = 1;
 	if (ac == 1 || (ac == 2 && !av[1][0]))
 	{
 		ft_putstr_fd("you're just a chill guy who forgot the input :)\n", 2);
 		return (0);
 	}
 	if (ac == 2)
-	{
-		ft_sprocess(&a, av);
-		// ac = 0;
-		// while (av[j++])
-		// 	ac++;
-	}
+		// ft_sprocess(&a, av);
 	else
 		ft_fill(&a, av);
-	// while (av[i])
-	// {
-	// 	if (!valid_input(av[i]) && av[i + 1]) 
-	// 		// || (ft_atoi(av[i]) > INT_MAX || ft_atoi(av[i]) < INT_MIN))
-	// 	{
-	// 		ft_putstr_fd("kaaris > booba\n", 2);
-	// 		free_lbail(a);
-	// 		return (1);
-	// 	}
-	// 	a = assign(a, ft_atoi(av[i]));
-	// 	i++;
-	// }
 	write(1, "old_list : ", 11);
 	print_stack(a);
-	sort_numbers(&a, &b);
+	// big_sort(&a, &b);
 	write(1, "new_list : ", 11);
-	print_stack(a);
-	free_lbail(&a);
-	free_lbail(&b);
+	// print_stack(a);
+	// free_lbail(&a);
+	// free_lbail(&b);
 	return (0);
 }

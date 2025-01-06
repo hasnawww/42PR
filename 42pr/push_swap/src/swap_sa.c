@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   swap_rra.c                                         :+:      :+:    :+:   */
+/*   swap_sa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/15 22:22:17 by ilhasnao          #+#    #+#             */
-/*   Updated: 2024/12/30 23:59:41 by ilhasnao         ###   ########.fr       */
+/*   Created: 2024/12/14 20:44:32 by ilhasnao          #+#    #+#             */
+/*   Updated: 2025/01/06 06:12:00 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
+#include <stdlib.h>
 
-void swap_rra(t_stack **list)
+void	swap_sa(t_nodes *ab)
 {
-	t_stack *current;
-	t_stack *second_last;
-	
-	printf("ouiuioi\n");
-	if (!list || !*list || !(*list)->next)
-		return;
-	current = *list;
-	while (current->next->next != NULL)
-		current = current->next;
-	second_last = current;
-	current = current->next;
-	second_last->next = NULL;
-	current->next = *list;
-	*list = current;
-	// ft_putstr_fd("rra\n", 1);
-}
+	t_stack	*first;
+	t_stack	*sec;
+	int		temp;
 
+	if (!ab || !ab->a || !ab->a->next)
+		return;
+	first = ab->a;
+	sec = ab->a->next;
+	temp = first->data;
+	first->data = sec->data;
+	sec->data = temp;
+	ft_putstr_fd("sa\n", 1);
+}

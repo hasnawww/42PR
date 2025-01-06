@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 23:36:32 by ilhasnao          #+#    #+#             */
-/*   Updated: 2024/12/30 23:56:09 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/01/05 03:58:16 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	find_smallest(t_stack **list)
 {
-	int	smallest;
+	int		smallest;
 	t_stack	*temp;
 
 	temp = *list;
@@ -28,7 +28,7 @@ int	find_smallest(t_stack **list)
 	return (smallest);
 }
 
-int	adress_to(t_stack **list, int index)
+int	find_min_index(t_stack **list, int index)
 {
 	t_stack	*temp;
 	int	pos;
@@ -42,7 +42,7 @@ int	adress_to(t_stack **list, int index)
 		pos++;
 		temp = temp->next;
 	}
-	return (0);
+	return (-1);
 }
 
 void push_smallest(t_stack **a, t_stack **b)
@@ -51,7 +51,7 @@ void push_smallest(t_stack **a, t_stack **b)
 	int pos;
 
 	smallest = find_smallest(a);
-	pos = adress_to(a, smallest);
+	pos = find_min_index(a, smallest);
 	if (pos <= lstsize(*a)/2)
 	{
 		while ((*a)->data != smallest)
@@ -59,14 +59,11 @@ void push_smallest(t_stack **a, t_stack **b)
 	}
 	else
 	{
-		// printf("jousuila");
 		while ((*a)->data != smallest)
 		{
-			printf("value a->data = %ld\n", (*a)->data);
 			swap_rra(a);
 		}
 	}
-	// printf("value a = %ld\n", (*a)->data);
 	swap_pb(a, b);
 }
 

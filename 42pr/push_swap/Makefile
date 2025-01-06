@@ -6,17 +6,17 @@
 #    By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/24 14:33:52 by ilhasnao          #+#    #+#              #
-#    Updated: 2024/12/30 23:42:46 by ilhasnao         ###   ########.fr        #
+#    Updated: 2025/01/06 03:20:19 by ilhasnao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address,leak
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address,leak
 LIBFT = libft/
 RM = rm -f
 
-SRC_1 = src/main.c 
+SRC_1 = radix/ps.c
 
 SRC_2 = src/ft_lstsize.c \
 		src/swap_p.c \
@@ -24,12 +24,14 @@ SRC_2 = src/ft_lstsize.c \
 		src/swap_rra.c \
 		src/swap_sa.c \
 		src/ft_lstadd_front_bonus.c \
-		src/sort_three.c \
-		src/sort_four.c \
 		src/ft_lstadd_back_bonus.c \
 		src/ft_lstnew_bonus.c \
-		src/sort_five.c \
-		src/sort_hundred.c
+		# src/sort_three.c \
+		src/sort_four.c \
+		# src/sort_five.c \
+		# src/quicksort.c \
+		# src/big_sort_utils.c \
+		# src/big_sort.c \
 
 OBJ_1 = $(SRC_1:.c=.o)
 OBJ_2 = $(SRC_2:.c=.o)
