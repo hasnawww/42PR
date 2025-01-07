@@ -12,7 +12,7 @@
 
 NAME = push_swap
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address,leak
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 LIBFT = libft/
 RM = rm -f
 

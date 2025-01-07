@@ -12,39 +12,53 @@
 
 #include "../push_swap.h"
 
-void	swap_pa(t_nodes *ab)
-{
-	t_stack	*new;
-
-	if (!ab || !ab->b)
-		return ;
-	new = ab->b;
-	ab->b = new->next;
-	new->next = ab->a;
-	ab->a = new;
-	ft_putstr_fd("pa\n", 1);
-}
+// void	swap_pa(t_nodes *ab)
 // {
 // 	t_stack	*new;
 
-// 	new = *listb;
-// 	if (!new)
+// 	if (!ab || !ab->b)
 // 		return ;
-// 	*listb = (*listb)->next;
-// 	ft_lstadd_front2(lista, new);
-// 	// printf("pa = %ld\n", new->data);
+// 	new = ab->b;
+// 	ab->b = new->next;
+// 	new->next = ab->a;
+// 	ab->a = new;
 // 	ft_putstr_fd("pa\n", 1);
 // }
-
-void	swap_pb(t_nodes *ab)
+void	swap_pa(t_stack **lista, t_stack **listb)
 {
 	t_stack	*new;
 
-	if (!ab || !ab->a)
+	new = *listb;
+	if (!new)
 		return ;
-	new = ab->a;
-	ab->a = new->next;
-	new->next = ab->b;
-	ab->a = new;
+	*listb = (*listb)->next;
+	ft_lstadd_front2(lista, new);
+	// printf("pa = %ld\n", new->data);
+	ft_putstr_fd("pa\n", 1);
+}
+
+void	swap_pb(t_stack **lista, t_stack **listb)
+{
+	t_stack	*new;
+
+	new = *lista;
+	if (!new)
+		return ;
+	*lista = (*lista)->next;
+	ft_lstadd_front2(listb, new);
+	// printf("pb = %ld\n", new->data);
 	ft_putstr_fd("pb\n", 1);
 }
+
+// void	swap_pb(t_nodes *ab)
+// {
+// 	t_stack	*new;
+
+// 	if (!ab || !ab->a)
+// 		return ;
+// 	new = ab->a;
+// 	ab->a = new->next;
+// 	new->next = ab->b;
+// 	ab->a = new;
+// 	ft_putstr_fd("pb\n", 1);
+// }

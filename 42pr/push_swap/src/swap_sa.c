@@ -13,16 +13,32 @@
 #include "../push_swap.h"
 #include <stdlib.h>
 
-void	swap_sa(t_nodes *ab)
+// void	swap_sa(t_nodes *ab)
+// {
+// 	t_stack	*first;
+// 	t_stack	*sec;
+// 	int		temp;
+
+// 	if (!ab || !ab->a || !ab->a->next)
+// 		return;
+// 	first = ab->a;
+// 	sec = ab->a->next;
+// 	temp = first->data;
+// 	first->data = sec->data;
+// 	sec->data = temp;
+// 	ft_putstr_fd("sa\n", 1);
+// }
+
+void	swap_sa(t_stack **list)
 {
 	t_stack	*first;
 	t_stack	*sec;
 	int		temp;
 
-	if (!ab || !ab->a || !ab->a->next)
+	if (!list || !*list || !(*list)->next)
 		return;
-	first = ab->a;
-	sec = ab->a->next;
+	first = *list;
+	sec = (*list)->next;
 	temp = first->data;
 	first->data = sec->data;
 	sec->data = temp;

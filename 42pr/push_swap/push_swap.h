@@ -26,11 +26,11 @@ typedef struct s_stack
 	struct s_stack	*next;
 }	t_stack;
 
-typedef struct s_nodes
-{
-	t_stack	*a;
-	t_stack	*b;
-}	t_nodes;
+// typedef struct s_nodes
+// {
+// 	t_stack	*a;
+// 	t_stack	*b;
+// }	t_nodes;
 
 int	lstsize(t_stack *list);
 void	*lstcmp(t_stack *list);
@@ -52,8 +52,8 @@ void sort_three(t_stack **a);
 // int	already_sorted(t_stack **a);
 void sort_four(t_stack **a, t_stack **b);
 t_stack	*ft_lstnew(int data);
-// void	ft_lstadd_back(t_stack **lst, t_stack *new);
-void	ft_lstaddback(t_nodes *lst, t_stack *new);
+void	ft_lstadd_back(t_stack **lst, t_stack *new);
+// void	ft_lstaddback(t_nodes *lst, t_stack *new);
 void	ft_fill(t_stack **a, char **av);
 void	print_stack(t_stack *a);
 void	sort_five(t_stack **a, t_stack **b);
