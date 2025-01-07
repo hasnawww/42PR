@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+         #
+#    By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/24 14:33:52 by ilhasnao          #+#    #+#              #
-#    Updated: 2025/01/06 03:20:19 by ilhasnao         ###   ########.fr        #
+#    Updated: 2025/01/07 04:52:08 by hasnawww         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 LIBFT = libft/
 RM = rm -f
 
-SRC_1 = radix/ps.c
+SRC_1 = src/main.c
 
 SRC_2 = src/ft_lstsize.c \
 		src/swap_p.c \

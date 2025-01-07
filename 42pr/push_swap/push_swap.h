@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 20:45:16 by ilhasnao          #+#    #+#             */
-/*   Updated: 2025/01/06 06:12:14 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/01/07 06:17:22 by hasnawww         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,19 @@ typedef struct s_stack
 int	lstsize(t_stack *list);
 void	*lstcmp(t_stack *list);
 void	ft_lstadd_front2(t_stack **lst, t_stack *new);
-void	swap_pa(t_nodes *ab);
-void	swap_pb(t_nodes *ab);
-void	swap_ra(t_nodes *ab);
-void	swap_rra(t_nodes *ab);
-void	swap_sa(t_nodes *ab);
-void	swap_rrb(t_nodes *ab);
-void	swap_rb(t_nodes *ab);
-int	already_sorted(t_nodes *ab);
-// void	swap_pa(t_stack **lista, t_stack **listb);
-// void	swap_pb(t_stack **lista, t_stack **listb);
-// void	swap_ra(t_stack **list);
-// void swap_rra(t_stack **list);
-// void	*swap_sa(t_stack **list);
+// void	swap_pa(t_nodes *ab);
+// void	swap_pb(t_nodes *ab);
+// void	swap_ra(t_nodes *ab);
+// void	swap_rra(t_nodes *ab);
+// void	swap_sa(t_nodes *ab);
+// void	swap_rrb(t_nodes *ab);
+// void	swap_rb(t_nodes *ab);
+// int	already_sorted(t_nodes *ab);
+void	swap_pa(t_stack **lista, t_stack **listb);
+void	swap_pb(t_stack **lista, t_stack **listb);
+void	swap_ra(t_stack **list);
+void 	swap_rra(t_stack **list);
+void	swap_sa(t_stack **list);
 void sort_three(t_stack **a);
 // int	already_sorted(t_stack **a);
 void sort_four(t_stack **a, t_stack **b);
