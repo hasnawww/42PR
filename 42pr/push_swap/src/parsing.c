@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:01:37 by ilhasnao          #+#    #+#             */
-/*   Updated: 2025/01/08 19:48:18 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/01/08 23:13:12 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,21 @@ int	already_sorted(t_stack **a)
 	return (1);
 }
 
-void	show_error(void)
+void	show_error(t_stack **a, t_stack **b)
 {
+	free_lbail(a);
+	free_lbail(b);
 	ft_putstr_fd("Error\n", 1);
 	exit(0);
 }
 
-int	has_duplicate(char **av)
+int	has_duplicate(char **av, int num, int i)
 {
-	int	i;
-	int	j;
-
-	i = 1;
+	i++;
 	while (av[i])
 	{
-		j = i + 1;
-		while (av[j])
-		{
-			if (ft_atoi(av[i]) == ft_atoi(av[j]))
-				return (1);
-			j++;
-		}
+		if (ft_atoi(av[i]) == num)
+			return (1);
 		i++;
 	}
 	return (0);
@@ -60,7 +54,11 @@ int	is_num(char *str)
 
 	i = 0;
 	if (str[i] == '-' || str[i] == '+')
+	{
+		if (!str[i + 1])
+			return (0);
 		i++;
+	}
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
@@ -70,10 +68,10 @@ int	is_num(char *str)
 	return (1);
 }
 
-void	validate_arg(char **av, int ac)
+void	validate_arg(char **av, int ac, t_stack **a, t_stack **b)
 {
 	int		i;
-	int		value;
+	long	value;
 	char	**result;
 
 	i = 0;
@@ -86,15 +84,15 @@ void	validate_arg(char **av, int ac)
 	}
 	while (result[i])
 	{
-		value = ft_atoi(result[i]);
-		if (value < INT_MIN || value > INT_MAX)
-			show_error();
-		if (has_duplicate(result))
-			show_error();
-		if (!is_num(result[i]))
-			show_error();
+		value = ft_atol(result[i]);
+		if (value < INT_MIN || value > INT_MAX
+			|| (has_duplicate(result, value, i))
+			|| !is_num(result[i]))
+		{
+			if (ac == 2)
+				dree_split(result);
+			show_error(a, b);
+		}
 		i++;
 	}
-	if (ac == 2)
-		dree_split(result);
 }

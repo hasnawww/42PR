@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 20:45:16 by ilhasnao          #+#    #+#             */
-/*   Updated: 2025/01/08 19:40:53 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/01/08 23:11:50 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <unistd.h>
 # include "libft/libft.h"
 # include "limits.h"
+
+# define ERROR -214748364888
 
 typedef struct s_stack
 {
@@ -57,11 +59,12 @@ void	radix_sort(t_stack **a, t_stack **b);
 int		number_of_bits(t_stack **a);
 void	ft_sprocess(t_stack **a, char **av, int ac);
 void	free_lbail(t_stack **a);
-void	show_error(void);
-int		has_duplicate(char **av);
+void	show_error(t_stack **a, t_stack **b);
+int		has_duplicate(char **av, int num, int i);
 int		is_num(char *str);
-void	validate_arg(char **av, int ac);
+void	validate_arg(char **av, int ac, t_stack **a, t_stack **b);
 void	algo(t_stack **a, t_stack **b);
 void	sort_two(t_stack **a);
+long	ft_atol(const char *str);
 
 #endif

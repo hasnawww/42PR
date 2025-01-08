@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+         #
+#    By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/24 14:33:52 by ilhasnao          #+#    #+#              #
-#    Updated: 2025/01/08 03:49:31 by hasnawww         ###   ########.fr        #
+#    Updated: 2025/01/08 22:38:39 by ilhasnao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 LIBFT = libft/
 RM = rm -f
 
@@ -21,6 +21,7 @@ SRC_1 = src/main.c
 SRC_2 = src/list.c \
 		src/utils.c \
 		src/utils_2.c \
+		src/utils_3.c \
 		src/print.c \
 		src/parsing.c \
 		src/sort.c \
