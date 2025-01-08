@@ -6,7 +6,7 @@
 #    By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/24 14:33:52 by ilhasnao          #+#    #+#              #
-#    Updated: 2025/01/07 04:52:08 by hasnawww         ###   ########.fr        #
+#    Updated: 2025/01/08 03:49:31 by hasnawww         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,20 +18,17 @@ RM = rm -f
 
 SRC_1 = src/main.c
 
-SRC_2 = src/ft_lstsize.c \
-		src/swap_p.c \
-		src/swap_ra.c \
-		src/swap_rra.c \
-		src/swap_sa.c \
-		src/ft_lstadd_front_bonus.c \
-		src/ft_lstadd_back_bonus.c \
-		src/ft_lstnew_bonus.c \
-		# src/sort_three.c \
-		src/sort_four.c \
-		# src/sort_five.c \
-		# src/quicksort.c \
-		# src/big_sort_utils.c \
-		# src/big_sort.c \
+SRC_2 = src/list.c \
+		src/utils.c \
+		src/utils_2.c \
+		src/print.c \
+		src/parsing.c \
+		src/sort.c \
+		src/algo.c \
+		instructions/swap_p.c \
+		instructions/swap_r.c \
+		instructions/swap_rr.c \
+		instructions/swap_s.c \
 
 OBJ_1 = $(SRC_1:.c=.o)
 OBJ_2 = $(SRC_2:.c=.o)
