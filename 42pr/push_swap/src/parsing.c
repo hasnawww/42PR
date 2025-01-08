@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:01:37 by ilhasnao          #+#    #+#             */
-/*   Updated: 2025/01/08 23:13:12 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/01/08 23:51:36 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	show_error(t_stack **a, t_stack **b)
 	exit(0);
 }
 
-int	has_duplicate(char **av, int num, int i)
+int	dupl(char **av, int num, int i)
 {
 	i++;
 	while (av[i])
@@ -48,7 +48,7 @@ int	has_duplicate(char **av, int num, int i)
 	return (0);
 }
 
-int	is_num(char *str)
+int	inm(char *str)
 {
 	int	i;
 
@@ -71,7 +71,7 @@ int	is_num(char *str)
 void	validate_arg(char **av, int ac, t_stack **a, t_stack **b)
 {
 	int		i;
-	long	value;
+	long	v;
 	char	**result;
 
 	i = 0;
@@ -84,10 +84,8 @@ void	validate_arg(char **av, int ac, t_stack **a, t_stack **b)
 	}
 	while (result[i])
 	{
-		value = ft_atol(result[i]);
-		if (value < INT_MIN || value > INT_MAX
-			|| (has_duplicate(result, value, i))
-			|| !is_num(result[i]))
+		v = ft_atol(result[i]);
+		if (v < INT_MIN || v > INT_MAX || dupl(result, v, i) || !inm(result[i]))
 		{
 			if (ac == 2)
 				dree_split(result);
@@ -95,4 +93,6 @@ void	validate_arg(char **av, int ac, t_stack **a, t_stack **b)
 		}
 		i++;
 	}
+	if (ac == 2)
+		dree_split(result);
 }
