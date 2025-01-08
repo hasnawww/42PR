@@ -3,34 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 03:35:52 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/01/08 03:48:53 by hasnawww         ###   ########.fr       */
+/*   Updated: 2025/01/08 19:45:38 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void sort_two(t_stack **a)
-{
-    t_stack	*temp;
-
-    temp = *a;
-    if (temp->data > temp->next->data)
-        swap_sa(a);
-}
-
-void sort_three(t_stack **a)
+void	sort_two(t_stack **a)
 {
 	t_stack	*temp;
 
 	temp = *a;
-	if (temp->data > temp->next->data 
+	if (temp->data > temp->next->data)
+		swap_sa(a);
+}
+
+void	sort_three(t_stack **a)
+{
+	t_stack	*temp;
+
+	temp = *a;
+	if (temp->data > temp->next->data
 		&& temp->data < temp->next->next->data)
 		swap_sa(a);
 	else if (temp->data > temp->next->data
-		&& temp->data > temp->next->next->data)
+		&& temp->next->data > temp->next->next->data)
 	{
 		swap_sa(a);
 		swap_rra(a);
@@ -49,7 +49,7 @@ void sort_three(t_stack **a)
 		swap_rra(a);
 }
 
-void sort_four(t_stack **a, t_stack **b)
+void	sort_four(t_stack **a, t_stack **b)
 {
 	push_smallest(a, b);
 	if (!already_sorted(a))

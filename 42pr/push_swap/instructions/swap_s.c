@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   swap_s.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 20:44:32 by ilhasnao          #+#    #+#             */
-/*   Updated: 2025/01/08 01:11:50 by hasnawww         ###   ########.fr       */
+/*   Updated: 2025/01/08 19:41:51 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	swap_sa(t_stack **list)
 	int		temp;
 
 	if (!list || !*list || !(*list)->next)
-		return;
+		return ;
 	first = *list;
 	sec = (*list)->next;
 	temp = first->data;
@@ -36,7 +36,7 @@ void	swap_sb(t_stack **list)
 	int		temp;
 
 	if (!list || !*list || !(*list)->next)
-		return;
+		return ;
 	first = *list;
 	sec = (*list)->next;
 	temp = first->data;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 03:43:15 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/01/08 04:01:36 by hasnawww         ###   ########.fr       */
+/*   Updated: 2025/01/08 19:43:13 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	number_of_bits(t_stack **a)
 	{
 		if (temp->index > max)
 			max = temp->index;
-		temp = temp->next; 
+		temp = temp->next;
 	}
-	while (max>>i != 0)
+	while (max >> i != 0)
 		i++;
 	return (i);
 }
@@ -47,7 +47,7 @@ void	dree_split(char **result)
 void	ft_sprocess(t_stack **a, char **av, int ac)
 {
 	char	**result;
-	
+
 	result = ft_split(av[1], ' ');
 	ft_fill(a, result, ac);
 	dree_split(result);
@@ -57,12 +57,12 @@ void	ft_fill(t_stack **a, char **av, int ac)
 {
 	int	i;
 
-    if (ac > 2)
-	    i = 1;
-    else
-    {
-        i = 0;
-    }
+	if (ac > 2)
+		i = 1;
+	else
+	{
+		i = 0;
+	}
 	while (av[i])
 		ft_lstadd_back(a, ft_lstnew(ft_atoi(av[i++])));
 }
@@ -70,6 +70,7 @@ void	ft_fill(t_stack **a, char **av, int ac)
 void	free_lbail(t_stack **a)
 {
 	t_stack	*temp;
+
 	while (*a)
 	{
 		temp = *a;

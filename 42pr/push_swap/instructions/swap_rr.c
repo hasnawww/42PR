@@ -1,49 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   swap_rra.c                                         :+:      :+:    :+:   */
+/*   swap_rr.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 22:22:17 by ilhasnao          #+#    #+#             */
-/*   Updated: 2025/01/08 00:49:08 by hasnawww         ###   ########.fr       */
+/*   Updated: 2025/01/08 19:32:27 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void swap_rra(t_stack **list)
+void	swap_rra(t_stack **ps)
 {
-	t_stack *current;
-	t_stack *second_last;
-	
-	if (!list || !*list || !(*list)->next)
-		return;
-	current = *list;
-	while (current->next->next != NULL)
-		current = current->next;
-	second_last = current;
-	current = current->next;
-	second_last->next = NULL;
-	current->next = *list;
-	*list = current;
-	ft_putstr_fd("rra\n", 2);
+	t_stack	*last;
+	t_stack	*second_last;
+
+	if (!ps || !*ps || !(*ps)->next)
+		return ;
+	last = *ps;
+	second_last = NULL;
+	while (last->next != NULL)
+	{
+		second_last = last;
+		last = last->next;
+	}
+	if (second_last)
+		second_last->next = NULL;
+	last->next = *ps;
+	*ps = last;
+	ft_putstr_fd("rra\n", 1);
 }
 
-void swap_rrb(t_stack **list)
+void	swap_rrb(t_stack **ps)
 {
-	t_stack *current;
-	t_stack *second_last;
-	
-	if (!list || !*list || !(*list)->next)
-		return;
-	current = *list;
-	while (current->next->next != NULL)
-		current = current->next;
-	second_last = current;
-	current = current->next;
-	second_last->next = NULL;
-	current->next = *list;
-	*list = current;
-	ft_putstr_fd("rrb\n", 2);
+	t_stack	*last;
+	t_stack	*second_last;
+
+	if (!ps || !*ps || !(*ps)->next)
+		return ;
+	last = *ps;
+	second_last = NULL;
+	while (last->next != NULL)
+	{
+		second_last = last;
+		last = last->next;
+	}
+	if (second_last)
+		second_last->next = NULL;
+	last->next = *ps;
+	*ps = last;
+	ft_putstr_fd("rrb\n", 1);
 }

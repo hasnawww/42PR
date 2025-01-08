@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 01:05:15 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/01/08 03:06:07 by hasnawww         ###   ########.fr       */
+/*   Updated: 2025/01/08 19:49:23 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	lstsize(t_stack *lst)
 	int		i;
 
 	i = 0;
-	while(lst)
+	while (lst)
 	{
 		lst = lst->next;
 		i++;
@@ -69,12 +69,10 @@ int	lstsize(t_stack *lst)
 	return (i);
 }
 
-#include "../push_swap.h"
-
 void	ft_lstadd_front2(t_stack **lst, t_stack *new)
 {
-        if (!new || !lst)
-                return ;
-        new->next = *lst;
-        *lst = new;
+	if (!new || !lst)
+		return ;
+	new->next = *lst;
+	*lst = new;
 }

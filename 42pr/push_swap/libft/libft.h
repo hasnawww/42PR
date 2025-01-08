@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 07:38:04 by ilhasnao          #+#    #+#             */
-/*   Updated: 2024/12/30 01:47:17 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/01/08 19:51:09 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,6 @@
 
 # include <stdlib.h>
 # include "../push_swap.h"
-
-typedef struct s_list
-{
-	void			*content;
-	struct s_list
-	*next;
-}				b_list;
 
 int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 01:11:46 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/01/08 02:26:01 by hasnawww         ###   ########.fr       */
+/*   Updated: 2025/01/08 19:44:30 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,28 @@ int	find_smallest(t_stack **list)
 int	find_min_index(t_stack **list, int index)
 {
 	t_stack	*temp;
-	int	pos;
+	int		pos;
 
 	pos = 0;
 	temp = *list;
 	while (temp)
 	{
 		if (temp->data == index)
-			return(pos);
+			return (pos);
 		pos++;
 		temp = temp->next;
 	}
 	return (-1);
 }
 
-void push_smallest(t_stack **a, t_stack **b)
+void	push_smallest(t_stack **a, t_stack **b)
 {
-	int smallest;
-	int pos;
+	int	smallest;
+	int	pos;
 
 	smallest = find_smallest(a);
 	pos = find_min_index(a, smallest);
-	if (pos <= lstsize(*a)/2)
+	if (pos <= lstsize(*a) / 2)
 	{
 		while ((*a)->data != smallest)
 			swap_ra(a);

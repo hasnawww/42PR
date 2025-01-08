@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:01:37 by ilhasnao          #+#    #+#             */
-/*   Updated: 2025/01/08 03:45:24 by hasnawww         ###   ########.fr       */
+/*   Updated: 2025/01/08 19:48:18 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ int	is_num(char *str)
 
 void	validate_arg(char **av, int ac)
 {
-	int	i;
-	int	value;
+	int		i;
+	int		value;
 	char	**result;
 
 	i = 0;
