@@ -6,7 +6,7 @@
 #    By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/24 14:33:52 by ilhasnao          #+#    #+#              #
-#    Updated: 2025/01/18 12:20:23 by hasnawww         ###   ########.fr        #
+#    Updated: 2025/01/27 17:22:08 by hasnawww         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 LIBFT = libft/
 RM = rm -f
 
-SRC_1 = pipex.c
+SRC_1 = pipex_bonus.c
 
 SRC_2 = test.c
 
