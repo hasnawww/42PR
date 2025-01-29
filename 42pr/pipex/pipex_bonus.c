@@ -6,7 +6,7 @@
 /*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 11:57:02 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/01/27 17:59:18 by hasnawww         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:51:32 by hasnawww         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,28 @@ void	processs(char *cmd, char **envp, int fd)
 	}
 }
 
+char	*here_doc(char **av, char **env)
+{
+	char	*line;
+	int		fd;
+	int		p[2];
+
+	pipe(p);
+	fd = open("file3.txt", O_WRONLY);
+	while(1)
+	{
+		line = get_next_line(0);
+		if (ft_strncmp(line, av[2], ft_strlen(av[2])) == 0)
+		{
+			break;
+		}
+		write(p[1], &line, ft_strlen(line));
+	}
+	close(p[1]);
+	dup2(p[0], STDIN_FILENO);
+}
+
+
 int	main(int ac, char **av, char **envp)
 {
 	int		fd1;
@@ -172,7 +194,12 @@ int	main(int ac, char **av, char **envp)
 
 	i = 3;
 	last_cmd = ft_split(av[ac - 2], ' ');
-	if (ac >= 5)
+	if (ac >=5 && av[1] == "here_doc")
+	{
+		here_doc(av, envp);
+	}
+	
+	else if (ac >= 5)
 	{		
 		fd1 = open(av[1], O_RDONLY);
 		fd2 = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC);

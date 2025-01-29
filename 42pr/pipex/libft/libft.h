@@ -6,7 +6,7 @@
 /*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 07:38:04 by ilhasnao          #+#    #+#             */
-/*   Updated: 2025/01/18 12:17:09 by hasnawww         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:45:11 by hasnawww         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include "../pipex.h"
+# include "get_next_line.h"
 
 int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
