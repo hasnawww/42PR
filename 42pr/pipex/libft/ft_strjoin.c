@@ -6,23 +6,12 @@
 /*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 07:30:49 by ilhasnao          #+#    #+#             */
-/*   Updated: 2025/01/18 12:35:44 by hasnawww         ###   ########.fr       */
+/*   Updated: 2025/01/29 16:40:54 by hasnawww         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-
-int	ft_strlen(char const *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
-}
+#include "libft.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
