@@ -6,7 +6,7 @@
 /*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 11:57:02 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/01/30 11:38:17 by hasnawww         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:49:23 by hasnawww         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,21 +156,12 @@ void	here_doc(char **av)
 {
 	int		pid;
 	int		p[2];
-	// int		zumba;
-	// int		fd;
 
 	pipe(p);
-	// fd = open("file3.txt", O_RDWR | O_CREAT | O_APPEND, 0666);
-	// if(fd == -1)
-	// {
-	// 	perror("error");
-	// 	exit(1);
-	// }
-	// zumba = 0;
 	pid = fork();
 	if (pid == 0)
 	{
-		if (!enter_line(av[2], p))
+		if (!get_line(av[2], p))
 		{
 			close(p[1]);
 			dup2(p[0], 0);
@@ -185,14 +176,14 @@ void	here_doc(char **av)
 	}
 }
 
-int	enter_line(char *limiter, int *p)
+int	get_line(char *limiter, int *p)
 {
 	char	*line;
 
 	limiter = ft_strjoin(limiter, "\n");
 	if(!(limiter))
 	{
-		printf("porblemememem");
+		perror("error");
 	}
 	while(1)
 	{
@@ -204,12 +195,12 @@ int	enter_line(char *limiter, int *p)
 			free(line);
 			get_next_line(-1);
 			free(limiter);
-			exit(EXIT_SUCCESS);
+			exit(0);
 		}
 		ft_putstr_fd(line, p[1]);
 		free(line);
 	}
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
 // void	here_doc(char *limiter)
@@ -256,7 +247,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac >= 5 && ft_strncmp(av[1], "here_doc", ft_strlen("here_doc")) == 0)
 	{
 		here_doc(av);
-		while (i <= ac - 2)
+		while (i < ac - 2)
 			processs(av[i++], envp, 1, p);
 		last_process(av, envp, p);
 		wait(0);

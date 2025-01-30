@@ -6,7 +6,7 @@
 /*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 20:45:16 by ilhasnao          #+#    #+#             */
-/*   Updated: 2025/01/30 11:35:40 by hasnawww         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:46:39 by hasnawww         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@
 #include <sys/wait.h>
 # include "libft/libft.h"
 
-int	enter_line(char *limiter, int *p);
+int	get_line(char *limiter, int *p);
 
 #endif
