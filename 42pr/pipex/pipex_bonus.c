@@ -6,11 +6,11 @@
 /*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 11:57:02 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/01/29 23:25:09 by hasnawww         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:38:17 by hasnawww         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipexbonus.h"
 
 void    dree_split(char **result)
 {
@@ -99,6 +99,7 @@ void	parent(int *p, char **av, char **envp, int pid)
 		return ;
 	}
 	dup2(fd2, 1);
+	close(fd2);
 	dup2(p[0], 0);
 	close(p[0]);
 	waitpid(pid, NULL, 0);
@@ -109,9 +110,8 @@ void	parent(int *p, char **av, char **envp, int pid)
 	}
 }
 
-void	processs(char *cmd, char **envp, int fd)
+void	processs(char *cmd, char **envp, int fd, int *p)
 {
-	int		p[2];
 	pid_t	pid;
 	char	**big_cmd;
 
@@ -119,8 +119,8 @@ void	processs(char *cmd, char **envp, int fd)
 	pid = fork();
 	if (pid == 0)
 	{
-		big_cmd = ft_split(cmd, ' ');
 		close(p[0]);
+		big_cmd = ft_split(cmd, ' ');
 		dup2(p[1], fd);
 		if (execve(get_path(cmd, envp), big_cmd, envp) == -1)
 		{
@@ -131,84 +131,114 @@ void	processs(char *cmd, char **envp, int fd)
 	{
 		close(p[1]);
 		dup2(p[0], 0);
-		waitpid(pid, NULL, 0);
 	}
 }
 
-// void	here_doc(char **av, char **env)
-// {
-// 	char	*line;
-// 	int		p[2];
-// 	int		pid;
-// 	// int		zumba;
-// 	// int		fd;
-
-// 	pipe(p);
-// 	// fd = open("file3.txt", O_RDWR | O_CREAT | O_APPEND, 0666);
-// 	// if(fd == -1)
-// 	// {
-// 	// 	perror("error");
-// 	// 	exit(1);
-// 	// }
-// 	// zumba = 0;
-// 	pid = fork();
-// 	if (pid == 0)
-// 	{
-// 		close(p[0]);
-// 		while(1)
-// 		{
-// 			line = get_next_line(0);
-// 			if (!line)
-// 			break;
-// 			if (ft_strncmp(line, av[2], ft_strlen(av[2])) == 0)
-// 			{
-// 				free(line);
-// 				break;
-// 			}
-// 			write(p[1], line, ft_strlen(line));
-// 			free(line);
-// 		}
-// 		dup2(p[0], 0);
-// 		close(p[0]);
-// 		child(p, av, env);
-// 	}
-// 	else
-// 	{
-// 		parent(p, av, env, pid);
-// 	}
-// }
-
-void	here_doc(char *limiter)
+void	last_process(char **av, char **env, int *p)
 {
-	pid_t	reader;
-	int		fd[2];
-	char	*line;
+	int		fd;
+	char	**last_cmd;
 
-	reader = fork();
-	pipe(fd);
-	if (reader == 0)
+	last_cmd = ft_split(av[4], ' ');
+	fd = open(av[5], O_WRONLY | O_CREAT | O_APPEND);
+	dup2(p[0], STDIN_FILENO);
+	close(p[0]);
+	dup2(fd, STDOUT_FILENO);
+	close(p[1]);
+	close(fd);
+	if(execve(get_path(av[4], env), last_cmd, env) == -1)
 	{
-		while(1)
+		perror("error");
+	}
+}
+
+void	here_doc(char **av)
+{
+	int		pid;
+	int		p[2];
+	// int		zumba;
+	// int		fd;
+
+	pipe(p);
+	// fd = open("file3.txt", O_RDWR | O_CREAT | O_APPEND, 0666);
+	// if(fd == -1)
+	// {
+	// 	perror("error");
+	// 	exit(1);
+	// }
+	// zumba = 0;
+	pid = fork();
+	if (pid == 0)
+	{
+		if (!enter_line(av[2], p))
 		{
-			line = get_next_line(0);
-			if (!line)
-			break;
-			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
-			{
-				free(line);
-				break;
-			}
-			write(fd[1], line, ft_strlen(line));
-			free(line);
+			close(p[1]);
+			dup2(p[0], 0);
+			wait(NULL);
 		}
 	}
 	else
 	{
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
+		close(p[1]);
+		dup2(p[0], 0);
 		wait(NULL);
 	}
 }
+
+int	enter_line(char *limiter, int *p)
+{
+	char	*line;
+
+	limiter = ft_strjoin(limiter, "\n");
+	if(!(limiter))
+	{
+		printf("porblemememem");
+	}
+	while(1)
+	{
+		line = get_next_line(0);
+		if (!line)
+			break;
+		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+		{
+			free(line);
+			get_next_line(-1);
+			free(limiter);
+			exit(EXIT_SUCCESS);
+		}
+		ft_putstr_fd(line, p[1]);
+		free(line);
+	}
+	return (EXIT_SUCCESS);
+}
+
+// void	here_doc(char *limiter)
+// {
+// 	pid_t	pid;
+// 	int		p[2];
+
+// 	pipe(p);
+// 	pid = fork();
+// 	if(pid == -1)
+// 	{
+// 		perror("error");
+// 	}
+// 	if (!pid)
+// 	{
+// 		if (!enter_line(limiter, p))
+// 		{
+// 			close(p[1]);
+// 			dup2(p[0], 0);
+// 			wait(NULL);
+// 		}
+// 	}
+// 	else
+// 	{
+// 		close(p[1]);
+// 		dup2(p[0], 0);
+// 		wait(NULL);
+// 	}
+// }
 
 int	main(int ac, char **av, char **envp)
 {
@@ -216,6 +246,7 @@ int	main(int ac, char **av, char **envp)
 	int		fd2;
 	int		i;
 	char	**last_cmd;
+	int		p[2];
 	// int		pid;
 
 	i = 3;
@@ -224,12 +255,12 @@ int	main(int ac, char **av, char **envp)
 	fd2 = open(av[ac - 1], O_WRONLY | O_CREAT | O_APPEND);
 	if (ac >= 5 && ft_strncmp(av[1], "here_doc", ft_strlen("here_doc")) == 0)
 	{
-		here_doc(av[2]);
-		while (i < ac - 2)
-			processs(av[i++], envp, 1);
-		dup2(fd2, STDOUT_FILENO);
-		if (execve(get_path(av[ac - 2], envp), last_cmd, envp) == -1)
-			perror("error");
+		here_doc(av);
+		while (i <= ac - 2)
+			processs(av[i++], envp, 1, p);
+		last_process(av, envp, p);
+		wait(0);
+		exit(EXIT_SUCCESS);
 	}
 	else
 	{
@@ -240,9 +271,9 @@ int	main(int ac, char **av, char **envp)
 		}
 		dup2(fd1, 0);
 		dup2(fd2, 1);
-		processs(av[i++], envp, fd1);
+		processs(av[i++], envp, fd1, p);
 		while (i < ac - 2)
-			processs(av[i++], envp, 1);
+			processs(av[i++], envp, 1, p);
 		if (execve(get_path(av[i], envp), last_cmd, envp) == -1)
 			perror("error");
 	}
