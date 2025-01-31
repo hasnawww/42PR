@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 17:35:58 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/01/27 17:22:58 by hasnawww         ###   ########.fr       */
+/*   Updated: 2025/01/31 16:32:47 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,28 @@
 #include <fcntl.h>
 #include <string.h>
 #include <stdlib.h>
+
+// int	main(int ac, char **av, char **env)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	i = 0;
+// 	j = 0;
+// 	if (av[0])
+// 		printf("oui\n");
+// 	if (ac > 0)
+// 	{
+// 		printf("oui\n");
+// 		while (env[i])
+// 		{
+// 			printf("oui\n");
+// 			printf("%s", env[i]);
+// 			i++;
+// 		}
+// 	}
+// 	return (0);
+// }
 
 // int main(int ac, char **av)
 // {

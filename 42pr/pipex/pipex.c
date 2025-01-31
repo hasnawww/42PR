@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 11:57:02 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/01/26 16:37:03 by hasnawww         ###   ########.fr       */
+/*   Updated: 2025/01/31 17:44:42 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	*path_line(char **env)
 	char	*PATH;
 
 	i = 0;
+	PATH = NULL;
 	while (env[i])
 	{
 		if(ft_strncmp(env[i], "PATH=", 5) == 0)
@@ -79,13 +80,15 @@ void	child(int *p, char **av, char **envp)
 
 	big_cmd1 = ft_split(av[2], ' ');
 	close(p[0]);
-	fd1 = open(av[1], O_RDONLY);
+	fd1 = open(av[1], O_RDONLY, 0777);
 	if (fd1 == -1)
 	{
 		return ;
 	}
 	dup2(fd1, 0);
+	close(fd1);
 	dup2(p[1], 1);
+	close(p[1]);
 	if (execve(get_path(av[2], envp), big_cmd1, envp) == -1)
 	{
 		perror("error");
@@ -99,18 +102,20 @@ void	parent(int *p, char **av, char **envp, int pid)
 
 	big_cmd2 = ft_split(av[3], ' ');
 	close(p[1]);
-	fd2 = open(av[4], 1);
+	fd2 = open(av[4], O_WRONLY | O_CREAT | O_APPEND, 0777);
 	if (fd2 == -1)
 	{
 		return ;
 	}
 	dup2(fd2, 1);
+	close(fd2);
 	dup2(p[0], 0);
+	close(p[0]);
+	waitpid(pid, NULL, 0);
 	if (execve(get_path(av[3], envp), big_cmd2, envp) == -1)
 	{
 		perror("error");
 	}
-	waitpid(pid, NULL, 0);
 }
 
 int	main(int ac, char **av, char **envp)

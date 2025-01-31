@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+         #
+#    By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/24 14:33:52 by ilhasnao          #+#    #+#              #
-#    Updated: 2025/01/28 17:45:26 by hasnawww         ###   ########.fr        #
+#    Updated: 2025/01/31 16:22:48 by ilhasnao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 LIBFT = libft/
 RM = rm -f
 
-SRC_1 = pipex_bonus.c
+SRC_1 = pipex.c
 
 SRC_2 = test.c
 
