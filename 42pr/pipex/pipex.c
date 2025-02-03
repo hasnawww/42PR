@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 11:57:02 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/01/31 17:44:42 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:52:05 by hasnawww         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void    dree_split(char **result)
+void	dree_split(char **result)
 {
-		int     i;
+	int	i;
 
-		i = 0;
-		while (result[i])
-			free(result[i++]);
-		free(result);
+	i = 0;
+	while (result[i])
+		free(result[i++]);
+	free(result);
 }
 
 
@@ -35,7 +35,7 @@ char	*path_line(char **env)
 		if(ft_strncmp(env[i], "PATH=", 5) == 0)
 		{
 			PATH = env[i] + 5;
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -75,7 +75,7 @@ char	*get_path(char *cmd, char **envp)
 
 void	child(int *p, char **av, char **envp)
 {
-	char 	**big_cmd1;
+	char	**big_cmd1;
 	int		fd1;
 
 	big_cmd1 = ft_split(av[2], ' ');
@@ -83,7 +83,8 @@ void	child(int *p, char **av, char **envp)
 	fd1 = open(av[1], O_RDONLY, 0777);
 	if (fd1 == -1)
 	{
-		return ;
+		close(fd1);
+		exit (1);
 	}
 	dup2(fd1, 0);
 	close(fd1);
@@ -92,29 +93,31 @@ void	child(int *p, char **av, char **envp)
 	if (execve(get_path(av[2], envp), big_cmd1, envp) == -1)
 	{
 		perror("error");
+		exit(EXIT_FAILURE);
 	}
 }
 
-void	parent(int *p, char **av, char **envp, int pid)
+void	parent(int *p, char **av, char **envp)
 {
 	char	**big_cmd2;
 	int		fd2;
 
 	big_cmd2 = ft_split(av[3], ' ');
 	close(p[1]);
-	fd2 = open(av[4], O_WRONLY | O_CREAT | O_APPEND, 0777);
+	fd2 = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (fd2 == -1)
 	{
-		return ;
+		close(fd2);
+		exit(1);
 	}
 	dup2(fd2, 1);
 	close(fd2);
 	dup2(p[0], 0);
 	close(p[0]);
-	waitpid(pid, NULL, 0);
 	if (execve(get_path(av[3], envp), big_cmd2, envp) == -1)
 	{
 		perror("error");
+		exit(127);
 	}
 }
 
@@ -122,15 +125,27 @@ int	main(int ac, char **av, char **envp)
 {
 	int		p[2];
 	__pid_t	pid;
-	
-	pipe(p);
-	pid = fork();
-	if (ac > 1)
+
+	if (ac == 5)
 	{
+		if (pipe(p) == -1)
+		{
+			perror("error");
+			exit(EXIT_FAILURE);
+		}
+		pid = fork();
+		if(pid == -1)
+		{
+			perror("error");
+			exit(EXIT_FAILURE);
+		}
 		if (pid == 0)
 			child(p, av, envp);
 		else
-			parent(p, av, envp, pid);
+		{
+			waitpid(pid, NULL, 0);
+			parent(p, av, envp);
+		}
 	}
 	return (0);
 }

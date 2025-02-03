@@ -6,13 +6,13 @@
 /*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 11:57:02 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/01/30 11:49:23 by hasnawww         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:38:30 by hasnawww         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipexbonus.h"
 
-void    dree_split(char **result)
+void	dree_split(char **result)
 {
 		int     i;
 
@@ -21,7 +21,6 @@ void    dree_split(char **result)
 			free(result[i++]);
 		free(result);
 }
-
 
 char	*path_line(char **env)
 {
@@ -34,12 +33,12 @@ char	*path_line(char **env)
 		if(ft_strncmp(env[i], "PATH=", 5) == 0)
 		{
 			PATH = env[i] + 5;
-			break;
+			break ;
 		}
 		i++;
 	}
 	if (!PATH)
-		return (NULL);
+		exit(1);
 	return (PATH);
 }
 
@@ -72,59 +71,26 @@ char	*get_path(char *cmd, char **envp)
 	return(NULL);
 }
 
-void	child(int *p, char **av, char **envp)
-{
-	char 	**big_cmd1;
-
-	big_cmd1 = ft_split(av[3], ' ');
-	close(p[0]);
-	dup2(p[1], 1);
-	close(p[1]);
-	if (execve(get_path(av[3], envp), big_cmd1, envp) == -1)
-	{
-		perror("error");
-	}
-}
-
-void	parent(int *p, char **av, char **envp, int pid)
-{
-	char	**big_cmd2;
-	int		fd2;
-
-	big_cmd2 = ft_split(av[4], ' ');
-	close(p[1]);
-	fd2 = open(av[5], O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	if (fd2 == -1)
-	{
-		return ;
-	}
-	dup2(fd2, 1);
-	close(fd2);
-	dup2(p[0], 0);
-	close(p[0]);
-	waitpid(pid, NULL, 0);
-	if (execve(get_path(av[4], envp), big_cmd2, envp) == -1)
-	{
-		perror("error");
-		exit(1);
-	}
-}
-
-void	processs(char *cmd, char **envp, int fd, int *p)
+void	processs(char *cmd, char **envp, int *p)
 {
 	pid_t	pid;
 	char	**big_cmd;
 
-	pipe(p);
+	if (pipe(p) == -1)
+	{	
+		perror("error");
+		exit(1);
+	}
 	pid = fork();
 	if (pid == 0)
 	{
 		close(p[0]);
 		big_cmd = ft_split(cmd, ' ');
-		dup2(p[1], fd);
+		dup2(p[1], 1);
 		if (execve(get_path(cmd, envp), big_cmd, envp) == -1)
 		{
 			perror("error");
+			exit(1);
 		}
 	}
 	else
@@ -134,21 +100,18 @@ void	processs(char *cmd, char **envp, int fd, int *p)
 	}
 }
 
-void	last_process(char **av, char **env, int *p)
+void	last_process(char **av, char **env, int *p, int ac)
 {
-	int		fd;
 	char	**last_cmd;
-
-	last_cmd = ft_split(av[4], ' ');
-	fd = open(av[5], O_WRONLY | O_CREAT | O_APPEND);
+	
+	last_cmd = ft_split(av[ac - 2], ' ');
 	dup2(p[0], STDIN_FILENO);
 	close(p[0]);
-	dup2(fd, STDOUT_FILENO);
 	close(p[1]);
-	close(fd);
-	if(execve(get_path(av[4], env), last_cmd, env) == -1)
+	if(execve(get_path(av[ac - 2], env), last_cmd, env) == -1)
 	{
 		perror("error");
+		exit(1);
 	}
 }
 
@@ -157,7 +120,11 @@ void	here_doc(char **av)
 	int		pid;
 	int		p[2];
 
-	pipe(p);
+	if(pipe(p) == -1)
+	{
+		perror("error");
+		exit(1);
+	}
 	pid = fork();
 	if (pid == 0)
 	{
@@ -184,18 +151,19 @@ int	get_line(char *limiter, int *p)
 	if(!(limiter))
 	{
 		perror("error");
+		exit(1);
 	}
 	while(1)
 	{
 		line = get_next_line(0);
 		if (!line)
-			break;
+			exit (-1);
 		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 		{
 			free(line);
 			get_next_line(-1);
 			free(limiter);
-			exit(0);
+			exit(1);
 		}
 		ft_putstr_fd(line, p[1]);
 		free(line);
@@ -203,153 +171,73 @@ int	get_line(char *limiter, int *p)
 	return (0);
 }
 
-// void	here_doc(char *limiter)
-// {
-// 	pid_t	pid;
-// 	int		p[2];
-
-// 	pipe(p);
-// 	pid = fork();
-// 	if(pid == -1)
-// 	{
-// 		perror("error");
-// 	}
-// 	if (!pid)
-// 	{
-// 		if (!enter_line(limiter, p))
-// 		{
-// 			close(p[1]);
-// 			dup2(p[0], 0);
-// 			wait(NULL);
-// 		}
-// 	}
-// 	else
-// 	{
-// 		close(p[1]);
-// 		dup2(p[0], 0);
-// 		wait(NULL);
-// 	}
-// }
+void	ft_error()
+{
+	perror("error");
+	exit(1);
+}
 
 int	main(int ac, char **av, char **envp)
 {
 	int		fd1;
 	int		fd2;
 	int		i;
-	char	**last_cmd;
 	int		p[2];
-	// int		pid;
 
-	i = 3;
-	last_cmd = ft_split(av[ac - 2], ' ');
-	fd1 = open(av[1], O_RDONLY);
-	fd2 = open(av[ac - 1], O_WRONLY | O_CREAT | O_APPEND);
 	if (ac >= 5 && ft_strncmp(av[1], "here_doc", ft_strlen("here_doc")) == 0)
 	{
+		i = 3;
 		here_doc(av);
-		while (i < ac - 2)
-			processs(av[i++], envp, 1, p);
-		last_process(av, envp, p);
-		wait(0);
-		exit(EXIT_SUCCESS);
+		fd2 = open(av[ac - 1], O_WRONLY | O_CREAT | O_APPEND, 0777);
 	}
-	else
+	else if (ac >= 5)
 	{
-		if((fd1) < 0|| (fd2) < 0)
-		{
-			perror("error");
-			exit(1);
-		}
+		fd1 = open(av[1], O_RDONLY, 0777);
+		fd2 = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		i = 2;
 		dup2(fd1, 0);
-		dup2(fd2, 1);
-		processs(av[i++], envp, fd1, p);
-		while (i < ac - 2)
-			processs(av[i++], envp, 1, p);
-		if (execve(get_path(av[i], envp), last_cmd, envp) == -1)
-			perror("error");
 	}
-	return (0);
+	while (i < ac - 2)
+		processs(av[i++], envp, p);
+	dup2(fd2, 1);
+	last_process(av, envp, p, ac);
+	wait(0);
+	exit(1);
+	return (1);
 }
 
 // int	main(int ac, char **av, char **envp)
 // {
-// 	char 	**big_cmd1;
-// 	// char	**big_cmd2;
-// 	int		**p;
-// 	__pid_t	child;
 // 	int		fd1;
 // 	int		fd2;
 // 	int		i;
-// 	int		j;
+// 	char	**last_cmd;
+// 	int		p[2];
 
-// 	j = 0;
 // 	i = 2;
-// 	if (ac >= 5)
-// 	{		
-// 		fd1 = open(av[1], O_RDONLY);
-// 		fd2 = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC);
-// 		p = malloc(sizeof(int *) * (ac - 3));
-// 		while (i < ac - 1)
-// 		{
-// 			if (j != ac -2)
-// 			{
-// 				p[j] = malloc(sizeof(int) * 2);
-// 				pipe(p[j]);
-// 			}
-// 			child = fork();
-// 			if (child == 0)
-// 			{
-// 				big_cmd1 = ft_split(av[i], ' ');
-// 				if (j == 0)
-// 				{
-// 					dup2(fd1, STDIN_FILENO);
-// 					dup2(p[j][1], 1);
-// 				}
-// 				else if (j == ac - 2)
-// 				{
-// 					dup2(fd2, STDOUT_FILENO);
-// 					dup2(p[j][0], 0);
-// 				}
-// 				else
-// 				{
-// 					dup2(p[j - 1][0], 0);
-// 					dup2(p[j][1], 1);
-// 				}
-// 				close(p[j][0]);
-// 			   close(p[j][1]);
-// 				if (execve(get_path(av[i], envp), big_cmd1, envp) == -1)
-// 				{
-// 					perror("error");
-// 				}
-// 			}
-// 			else
-// 			{
-// 				// big_cmd2 = ft_split(av[ac - 2], ' ');
-// 				close(p[j][1]);
-// 				// fd2 = open(av[ac - 1], 1);
-// 				// if (fd2 == -1)
-// 				// {
-// 				// 	return (0);
-// 				// }
-// 				// dup2(fd2, 1);
-// 				// dup2(p[j][0], 0);
-// 				// if (execve(get_path(av[3], envp), big_cmd2, envp) == -1)
-// 				// {
-// 				// 	perror("error");
-// 				// }
-// 				waitpid(child, NULL, 0);
-// 			}
-// 			i++;
-// 			j++;
-// 		}
-// 	  for (int k = 0; k < ac - 3; k++)
-//         {
-//             free(p[k]);
-//         }
-//         free(p);
-// 		close(fd1);
-// 		close(fd2);
-// 		return (0);
+// 	last_cmd = ft_split(av[ac - 2], ' ');
+// 	fd1 = open(av[1], O_RDONLY);
+// 	fd2 = open(av[ac - 1], O_WRONLY | O_CREAT | O_APPEND);
+// 	if(fd1 == -1 || fd2 == -1)
+// 		ft_error();
+// 	if (ac >= 5 && ft_strncmp(av[1], "here_doc", ft_strlen("here_doc")) == 0)
+// 	{
+// 		here_doc(av);
+// 		while (i < ac - 2)
+// 			processs(av[i++], envp, p);
+// 		last_process(av, envp, p, ac);
+// 		wait(0);
+// 		exit(1);
+// 	}
+// 	else
+// 	{
+// 		dup2(fd1, 0);
+// 		dup2(fd2, 1);
+// 		processs(av[i++], envp, p);
+// 		while (i < ac - 2)
+// 			processs(av[i++], envp, p);
+// 		if (execve(get_path(av[i], envp), last_cmd, envp) == -1)
+// 			ft_error();
 // 	}
 // 	return (1);
 // }
