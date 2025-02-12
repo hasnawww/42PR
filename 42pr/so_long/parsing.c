@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:20:50 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/11 18:37:01 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/02/12 17:59:48 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	vertical_border(char **map)
 	i = 1;
 	while (map[i])
 	{
-		line_len = ft_strlength(map[i]) - 2;
+		line_len = ft_strlength(map[i]) - 1;
 		if((map[i][0] == '1') && (map[i][line_len] == '1'))
 		{
 			if (i == count_lines(map))
@@ -94,7 +94,6 @@ int	vertical_border(char **map)
 		}
 		else
 		{
-			printf("\ngrrrrr\n");
 			return(0);
 		}
 	}
@@ -145,8 +144,13 @@ void	big_free(char **map)
 	free(map);
 }
 
-int	valid_characters(char c)
+int	valid_characters(char c, int *C_coin)
 {
+	if (c == 'C' && *C_coin == 0)
+	{
+		*C_coin = 1;
+		return (1);
+	}
 	if (c == '1' || c == '0' || c == 'C')
 	{
 		return (1);
@@ -154,18 +158,18 @@ int	valid_characters(char c)
 	return (0);
 }
 
-int	duplicate_characters(char c, int E_coin, int P_coin)
+int	duplicate_characters(char c, int *E_coin, int *P_coin)
 {
-	if (c == 'E' && E_coin == 0)
+	if (c == 'E' && *E_coin == 0)
 	{
 		printf("\njousuila\n");
-		E_coin = 1;
+		*E_coin = 1;
 		return (1);
 	}
-	else if (c == 'P' && P_coin == 0)
+	else if (c == 'P' && *P_coin == 0)
 	{
 		printf("\njousuila\n");
-		P_coin = 1;
+		*P_coin = 1;
 		return (1);
 	}
 	return (0);
@@ -177,31 +181,32 @@ int	check_characters(char **map)
 	int	j;
 	int	E_coin;
 	int	P_coin;
+	int	C_coin;
 
-	j = 0;
 	i = 0;
+	C_coin = 0;
 	E_coin = 0;
 	P_coin = 0;
 	while(map[i])
 	{
+		j = 0;
 		while(map[i][j])
 		{
-			if (valid_characters(map[i][j]) || map[i][j] == '\n')
+			if (valid_characters(map[i][j], &C_coin) || map[i][j] == '\n')
 				j++;
-			else if (duplicate_characters(map[i][j], E_coin, P_coin))
-			{
-				printf("fewfwf\n");
+			else if (duplicate_characters(map[i][j], &E_coin, &P_coin))
 				j++;
-			}
 			else
 			{
+				printf("Caractère invalide détecté : %c\n", map[i][j]);
 				return(0);
 			}
 		}
 		i++;
 	}
-	if (E_coin == 0|| P_coin == 0)
+	if (E_coin == 0|| P_coin == 0 || C_coin == 0)
 	{
+		printf("\nErreur : E, P ou C manquant !\n");
 		return(0);
 	}
 	return (1);
@@ -209,23 +214,18 @@ int	check_characters(char **map)
 
 int	is_rectangular(char **map)
 {
-	int	line;
+	int	i;
+	int	len;
 	
-	line = 0;
-	printf("\nlines = %d\n", count_lines(map));
-	while (map[line])
+	i = 0;
+	len = ft_strlength(map[0]);
+	while (map[i])
 	{
-		if ((line) == count_lines(map) - 1)
-			break;
-		printf("strlen de line = %d\n", ft_strlength(map[line]));
-		printf("strlen de line + 1 = %d\n", ft_strlength(map[line + 1]));
-		if (ft_strlength(map[line]) != ft_strlength(map[line + 1]))
-			return(0);
-		line++;
+		if (ft_strlength(map[i]) != len)
+			return (0);
+		i++;
 	}
-	if (ft_strlength(map[0]) < count_lines(map) || ft_strlength(map[0]) > count_lines(map))
-		return (1);
-	return (0);
+	return (1);
 }
 
 int	parsing(char **av, int ac)
@@ -239,10 +239,12 @@ int	parsing(char **av, int ac)
 	{
 		if (is_ber(av[1]))
 		{
-			if (!check_characters(map))
+			if (vertical_border(map))
 			{
-				ft_putstr_fd("\nnon\n", 1);
+				ft_putstr_fd("\noui\n", 1);
 			}
+			else
+				printf("\nnon\n");
 		}
 		big_free(map);
 	}
