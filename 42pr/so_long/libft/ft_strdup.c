@@ -6,13 +6,13 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 11:13:37 by ilhasnao          #+#    #+#             */
-/*   Updated: 2024/11/19 13:43:41 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:52:56 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-int	ft_strlen(const char *src)
+static int	ft_strlen(const char *src)
 {
 	int	i;
 
