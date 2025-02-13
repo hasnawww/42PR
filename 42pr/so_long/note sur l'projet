@@ -1,0 +1,13 @@
+faire une fonction get_coordinates pour P,
+
+Flood fill doit s arreter et return (1) quand il trouve E sinon il doit return (0)
+
+Dans flood fill je dois arreter la fonction lorsqu elle trouve un mur
+
+Je dois creer qui possede les coordonees a chaque instant t et peut etre refaire\
+mes fonctions de sorte a avoir la map dans une variable avec les coordonees etc peut etre ?
+
+Le probleme c est de devoir malloc ca hmm nan en vrai y'a r anhhhh
+
+Puis normalement apres ca, je mets tout au propre puis je check les leaks et je rentre dans
+la partie la plus interessante
