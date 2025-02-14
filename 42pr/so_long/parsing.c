@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:20:50 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/13 18:33:35 by hasnawww         ###   ########.fr       */
+/*   Updated: 2025/02/14 15:31:38 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ char **get_map(char *filename)
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		lines[line_count++] = line;
-		ft_putstr_fd(line, 1);
+		// ft_putstr_fd(line, 1);
 		if (line_count >= 1000)
 			ft_error();
 	}
@@ -177,11 +177,11 @@ int	duplicate_characters(char c, int *E_coin, int *P_coin)
 
 int	check_characters(char **map)
 {
-	int	i;
-	int	j;
-	int	E_coin;
-	int	P_coin;
-	int	C_coin;
+	int		i;
+	int		j;
+	int		E_coin;
+	int		P_coin;
+	int		C_coin;
 
 	i = 0;
 	C_coin = 0;
@@ -228,25 +228,40 @@ int	is_rectangular(char **map)
 	return (1);
 }
 
+// void	flood_fill(int x, int y, char **map)
+// {
+// 	if (map[x][y] == '1')
+// 		return (1);
+// 	if (map[x][y] == 'C' || map[x][y] == )
+// }
+
 int	parsing(char **av, int ac)
 {
-	char	**map;
+	// char	**map;
 	int		i;
+	t_map	*map;
+	int		x;
+	int		y;
 
-	map = get_map(av[1]);
-	i = count_lines(map);
+	x = 0;
+	y = 0;
+	map = malloc(sizeof(t_map));
+	if (!map)
+		return (1);
+	map->lines = get_map(av[1]);
+	i = count_lines(map->lines);
 	if (ac == 2)
 	{
 		if (is_ber(av[1]))
 		{
-			if (vertical_border(map))
+			while(map->lines[x])
 			{
-				ft_putstr_fd("\noui\n", 1);
+				printf("%s", map->lines[x]);
+				x++;
 			}
-			else
-				printf("\nnon\n");
+			// printf("%d\n", x);
 		}
-		big_free(map);
+		big_free(map->lines);
 	}
 	return(0);
 }
