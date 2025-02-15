@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:25:31 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/14 15:04:40 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/02/15 19:12:30 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ typedef struct s_items
 typedef struct s_map
 {
 	char			**lines;
-	int				i;
+	char			**copy;
+	int				x;
 	int				y;
 	t_items			*map_items;
 }	t_map;

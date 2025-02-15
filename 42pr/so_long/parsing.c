@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:20:50 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/14 15:31:38 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/02/15 19:25:38 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,29 @@ int	duplicate_characters(char c, int *E_coin, int *P_coin)
 	return (0);
 }
 
+void	get_coordinates(char **map, int *x, int *y)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] == 'P')
+			{
+				*x = i;
+				*y = j;
+				return ;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
 int	check_characters(char **map)
 {
 	int		i;
@@ -228,17 +251,72 @@ int	is_rectangular(char **map)
 	return (1);
 }
 
-// void	flood_fill(int x, int y, char **map)
-// {
-// 	if (map[x][y] == '1')
-// 		return (1);
-// 	if (map[x][y] == 'C' || map[x][y] == )
-// }
+int	get_Cs(char **map)
+{
+	int	C;
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	C = 0;
+	while (map[x])
+	{
+		y = 0;
+		while (map[x][y])
+		{
+			if (map[x][y] == 'C')
+				C++;
+			y++;
+		}
+		x++;
+	}
+	return(C);
+}
+
+char	**map_copy(char **map)
+{
+	int		i;
+	int		j;
+	char	**copy;
+
+	i = 0;
+	j = 0;
+	while (map[i])
+		i++;
+	copy = malloc(sizeof(char *) * i + 1);
+	while (map[j])
+	{
+		copy[j] = map[j];
+		j++;
+	}
+	return (copy);
+}
+
+void	flood_fill(int x, int y, t_map *map)
+{
+	if (map->copy[x][y] == 'V')
+		return ;
+	if (map->copy[x][y] == 'E')
+		map->map_items->E_coin = 1;
+	if (map->copy[x][y] == 'C')
+		map->map_items->C_coin += 1;
+	if (x < 0 || y < 0 || x >= max_x || y >= max_y)
+	CALCULER LA HEIGHT ET LA LENGTH DE MA STRUCTURE POUR CES DEUX LA
+
+	if (map->copy[x][y] == '0' || map->copy[x][y] == 'C')
+	{
+		map->copy[x][y] = 'V';
+		flood_fill(x + 1, y, map);
+		flood_fill(x, y + 1, map);
+		flood_fill(x - 1, y, map);
+		flood_fill(x, y - 1, map);
+	}
+}
 
 int	parsing(char **av, int ac)
 {
-	// char	**map;
-	int		i;
+	char	**copy;
 	t_map	*map;
 	int		x;
 	int		y;
@@ -246,21 +324,22 @@ int	parsing(char **av, int ac)
 	x = 0;
 	y = 0;
 	map = malloc(sizeof(t_map));
+	map->map_items = malloc(sizeof(t_items));
 	if (!map)
 		return (1);
 	map->lines = get_map(av[1]);
-	i = count_lines(map->lines);
+	map->map_items->C_coin = get_Cs(map->lines);
+	copy = map_copy(map->lines);
+	get_coordinates(copy, &x, &y);
 	if (ac == 2)
 	{
 		if (is_ber(av[1]))
 		{
-			while(map->lines[x])
-			{
-				printf("%s", map->lines[x]);
-				x++;
-			}
-			// printf("%d\n", x);
+			flood_fill(x, y, map);
 		}
+		if ((map->map_items->C_coin == get_Cs(map->lines))
+		 && map->map_items->E_coin == 1)
+			printf("La carte est valide\n");
 		big_free(map->lines);
 	}
 	return(0);
