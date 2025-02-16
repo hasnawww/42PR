@@ -1,40 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   solong.h                                           :+:      :+:    :+:   */
+/*   map_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/04 16:25:31 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/16 19:09:20 by ilhasnao         ###   ########.fr       */
+/*   Created: 2025/02/16 19:17:31 by ilhasnao          #+#    #+#             */
+/*   Updated: 2025/02/16 19:18:13 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef SOLONG_H
-# define SOLONG_H
+#include "solong.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-
-typedef struct s_items
+void	map_init(t_map *map, char **av)
 {
-	int			C_coin;
-	int			E_coin;
-	int			P_coin;
-}	t_items;
+	map->map_items = malloc(sizeof(t_items));
+	map->lines = get_map(av[1]);
+	map->height = count_lines(map->lines);
+	map->length = ft_strlen(map->lines[0]) - 1;
+	map->map_items->C_coin = 0;
+	map->map_items->E_coin = 0;
+	map->copy = map_copy(map->lines);
+	get_coordinates(map->copy, &map->x, &map->y);
+}
 
-typedef struct s_map
-{
-	char			**lines;
-	char			**copy;
-	int				length;
-	int				height;
-	int				x;
-	int				y;
-	t_items			*map_items;
-}	t_map;
-
-#endif

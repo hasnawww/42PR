@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:20:50 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/15 19:25:38 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:15:35 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,61 +295,91 @@ char	**map_copy(char **map)
 
 void	flood_fill(int x, int y, t_map *map)
 {
-	if (map->copy[x][y] == 'V')
+	if (x < 0 || y < 0 || x >= map->height || y >= map->length)
+		return ;
+	if (map->copy[x][y] == 'V' || map->copy[x][y] == '1')
 		return ;
 	if (map->copy[x][y] == 'E')
 		map->map_items->E_coin = 1;
 	if (map->copy[x][y] == 'C')
 		map->map_items->C_coin += 1;
-	if (x < 0 || y < 0 || x >= max_x || y >= max_y)
-	CALCULER LA HEIGHT ET LA LENGTH DE MA STRUCTURE POUR CES DEUX LA
-
 	if (map->copy[x][y] == '0' || map->copy[x][y] == 'C')
-	{
 		map->copy[x][y] = 'V';
-		flood_fill(x + 1, y, map);
-		flood_fill(x, y + 1, map);
-		flood_fill(x - 1, y, map);
-		flood_fill(x, y - 1, map);
-	}
+	flood_fill(x + 1, y, map);
+	flood_fill(x, y + 1, map);
+	flood_fill(x - 1, y, map);
+	flood_fill(x, y - 1, map);
+}
+
+void	map_init(t_map *map, char **av)
+{
+	map->map_items = malloc(sizeof(t_items));
+	map->lines = get_map(av[1]);
+	map->height = count_lines(map->lines);
+	map->length = ft_strlen(map->lines[0]) - 1;
+	map->map_items->C_coin = 0;
+	map->map_items->E_coin = 0;
+	map->copy = map_copy(map->lines);
+	get_coordinates(map->copy, &map->x, &map->y);
 }
 
 int	parsing(char **av, int ac)
 {
-	char	**copy;
 	t_map	*map;
 	int		x;
 	int		y;
+	int		Cs;
 
-	x = 0;
-	y = 0;
-	map = malloc(sizeof(t_map));
-	map->map_items = malloc(sizeof(t_items));
-	if (!map)
-		return (1);
-	map->lines = get_map(av[1]);
-	map->map_items->C_coin = get_Cs(map->lines);
-	copy = map_copy(map->lines);
-	get_coordinates(copy, &x, &y);
+	Cs = get_Cs(map->lines);
 	if (ac == 2)
 	{
 		if (is_ber(av[1]))
 		{
 			flood_fill(x, y, map);
 		}
-		if ((map->map_items->C_coin == get_Cs(map->lines))
+		if ((map->map_items->C_coin == Cs)
 		 && map->map_items->E_coin == 1)
 			printf("La carte est valide\n");
-		big_free(map->lines);
+		else
+			printf("La carte n'est pas valide\n");
+		printf("%d\n", Cs);
 	}
 	return(0);
 }
 
+void	print_map(t_map *map)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	while (map->lines[x])
+	{
+		printf("%s", map->lines[x]);
+		x++;
+	}
+	printf("height = %d\n", map->height);
+	printf("length = %d\n", map->length);
+}
+
+void	genkidama(t_map *map)
+{
+	big_free(map->lines);
+	free(map->copy);
+	free(map->map_items);
+	free(map);
+}
+
 int	main(int ac, char **av)
 {
+	t_map	*map;
+
+	map = malloc(sizeof(t_map));
 	if (ac == 2)
 	{
-		parsing(av, ac);
+		map_init(map, av);
 	}
+	genkidama(map);
 	return(0);
 }
