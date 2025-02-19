@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:20:50 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/16 19:15:35 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:24:50 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,31 +106,6 @@ void	ft_error()
 	exit(0);
 }
 
-char **get_map(char *filename)
-{
-	int fd;
-	char **lines;
-	int line_count;
-	char *line;
-
-	line_count = 0;
-	fd = open(filename, O_RDONLY);
-	if (fd == -1 || !is_ber(filename))
-		ft_error();
-	lines = malloc(sizeof(char *) * 1000);
-	if (!lines)
-		ft_error();	
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		lines[line_count++] = line;
-		// ft_putstr_fd(line, 1);
-		if (line_count >= 1000)
-			ft_error();
-	}
-	lines[line_count] = NULL;
-	return (lines);
-}
-
 void	big_free(char **map)
 {
 	int	i;
@@ -143,7 +118,7 @@ void	big_free(char **map)
 	}
 	free(map);
 }
-
+ 
 int	valid_characters(char c, int *C_coin)
 {
 	if (c == 'C' && *C_coin == 0)
@@ -162,40 +137,15 @@ int	duplicate_characters(char c, int *E_coin, int *P_coin)
 {
 	if (c == 'E' && *E_coin == 0)
 	{
-		printf("\njousuila\n");
 		*E_coin = 1;
 		return (1);
 	}
 	else if (c == 'P' && *P_coin == 0)
 	{
-		printf("\njousuila\n");
 		*P_coin = 1;
 		return (1);
 	}
 	return (0);
-}
-
-void	get_coordinates(char **map, int *x, int *y)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (map[i][j] == 'P')
-			{
-				*x = i;
-				*y = j;
-				return ;
-			}
-			j++;
-		}
-		i++;
-	}
 }
 
 int	check_characters(char **map)
@@ -274,30 +224,13 @@ int	get_Cs(char **map)
 	return(C);
 }
 
-char	**map_copy(char **map)
-{
-	int		i;
-	int		j;
-	char	**copy;
-
-	i = 0;
-	j = 0;
-	while (map[i])
-		i++;
-	copy = malloc(sizeof(char *) * i + 1);
-	while (map[j])
-	{
-		copy[j] = map[j];
-		j++;
-	}
-	return (copy);
-}
-
 void	flood_fill(int x, int y, t_map *map)
 {
 	if (x < 0 || y < 0 || x >= map->height || y >= map->length)
 		return ;
 	if (map->copy[x][y] == 'V' || map->copy[x][y] == '1')
+		return ;
+	if (map->copy[x][y] == 'E' && map->map_items->C_coin != get_Cs(map->lines))
 		return ;
 	if (map->copy[x][y] == 'E')
 		map->map_items->E_coin = 1;
@@ -311,41 +244,60 @@ void	flood_fill(int x, int y, t_map *map)
 	flood_fill(x, y - 1, map);
 }
 
-void	map_init(t_map *map, char **av)
+int	parsing(char **av, t_map *map)
 {
-	map->map_items = malloc(sizeof(t_items));
-	map->lines = get_map(av[1]);
-	map->height = count_lines(map->lines);
-	map->length = ft_strlen(map->lines[0]) - 1;
-	map->map_items->C_coin = 0;
-	map->map_items->E_coin = 0;
-	map->copy = map_copy(map->lines);
-	get_coordinates(map->copy, &map->x, &map->y);
-}
-
-int	parsing(char **av, int ac)
-{
-	t_map	*map;
-	int		x;
-	int		y;
-	int		Cs;
+	int	Cs;
 
 	Cs = get_Cs(map->lines);
-	if (ac == 2)
+	printf("CS = %d\n", Cs);
+	if (is_ber(av[1]))
 	{
-		if (is_ber(av[1]))
+		printf("1\n");
+		if (is_rectangular(map->lines))
 		{
-			flood_fill(x, y, map);
+			printf("2\n");
+			if (check_characters(map->lines))
+			{
+				printf("3\n");
+				if (vertical_border(map->lines) 
+					&& horizontal_border(map->lines[0]) 
+						&& horizontal_border(map->lines[count_lines(map->lines) - 1]))
+				{
+					printf("4\n");
+					flood_fill(map->x, map->y, map);
+					if ((map->map_items->C_coin == Cs)
+							&& map->map_items->E_coin == 1)
+						return(1);
+				}
+			}
 		}
-		if ((map->map_items->C_coin == Cs)
-		 && map->map_items->E_coin == 1)
-			printf("La carte est valide\n");
-		else
-			printf("La carte n'est pas valide\n");
-		printf("%d\n", Cs);
 	}
-	return(0);
+	return (0);
 }
+
+// int	parsing(char **av, int ac)
+// {
+// 	t_map	*map;
+// 	int		x;
+// 	int		y;
+// 	int		Cs;
+
+// 	Cs = get_Cs(map->lines);
+// 	if (ac == 2)
+// 	{
+// 		if (is_ber(av[1]))
+// 		{
+// 			flood_fill(x, y, map);
+// 		}
+// 		if ((map->map_items->C_coin == Cs)
+// 		 && map->map_items->E_coin == 1)
+// 			printf("La carte est valide\n");
+// 		else
+// 			printf("La carte n'est pas valide\n");
+// 		printf("%d\n", Cs);
+// 	}
+// 	return(0);
+// }
 
 void	print_map(t_map *map)
 {
@@ -354,19 +306,17 @@ void	print_map(t_map *map)
 
 	x = 0;
 	y = 0;
-	while (map->lines[x])
+	while (map->copy[x])
 	{
-		printf("%s", map->lines[x]);
+		printf("%s", map->copy[x]);
 		x++;
 	}
-	printf("height = %d\n", map->height);
-	printf("length = %d\n", map->length);
 }
 
 void	genkidama(t_map *map)
 {
 	big_free(map->lines);
-	free(map->copy);
+	big_free(map->copy);
 	free(map->map_items);
 	free(map);
 }
@@ -380,6 +330,14 @@ int	main(int ac, char **av)
 	{
 		map_init(map, av);
 	}
+	// if (parsing(av, map))
+	// 	printf("la map est valideuh\n");
+	// else
+	// 	printf("non\n");
+	if (parsing(av, map))
+		printf("la map est valide zin\n");
+	else
+		printf("do it for the vine\n");
 	genkidama(map);
 	return(0);
 }

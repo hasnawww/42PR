@@ -6,7 +6,7 @@
 #    By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/24 14:33:52 by ilhasnao          #+#    #+#              #
-#    Updated: 2025/02/15 16:27:31 by ilhasnao         ###   ########.fr        #
+#    Updated: 2025/02/17 17:36:16 by ilhasnao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 LIBFT = libft/
 RM = rm -f
 
-SRC_1 = parsing.c
+SRC_1 = parsing.c map_init.c
 
 OBJ_1 = $(SRC_1:.c=.o)
 
