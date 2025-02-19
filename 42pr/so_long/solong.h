@@ -6,13 +6,14 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:25:31 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/17 15:24:19 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:15:18 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # ifndef SOLONG_H
 # define SOLONG_H
 
+#include "errordef.h"
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -49,12 +50,12 @@ void	ft_error();
 void	big_free(char **map);
 int		valid_characters(char c, int *C_coin);
 int		duplicate_characters(char c, int *E_coin, int *P_coin);
-int		check_characters(char **map);
-int		is_rectangular(char **map);
+void	check_characters(t_map *map);
+int		is_rectangular(t_map *map);
 int		get_Cs(char **map);
 char	**map_copy(char **map);
 void	flood_fill(int x, int y, t_map *map);
-int		parsing(char **av, t_map *map);
+void		parsing(char **av, t_map *map);
 void	print_map(t_map *map);
 void	genkidama(t_map *map);
 
