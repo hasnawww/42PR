@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:20:50 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/19 15:17:28 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:52:14 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,20 +330,32 @@ void	genkidama(t_map *map)
 	free(map);
 }
 
-int	main(int ac, char **av)
-{
-	t_map	*map;
+// int	main(int ac, char **av)
+// {
+// 	t_map	*map;
 
-	map = malloc(sizeof(t_map));
-	if (ac == 2)
-	{
-		map_init(map, av);
-	// if (parsing(av, map))
-	// 	printf("la map est valideuh\n");
-	// else
-	// 	printf("non\n");
-		parsing(av, map);
-		genkidama(map);
-	}
-	return(0);
+// 	map = malloc(sizeof(t_map));
+// 	if (ac == 2)
+// 	{
+// 		map_init(map, av);
+// 	// if (parsing(av, map))
+// 	// 	printf("la map est valideuh\n");
+// 	// else
+// 	// 	printf("non\n");
+// 		parsing(av, map);
+// 		genkidama(map);
+// 	}
+// 	return(0);
+// }
+
+int main()
+{
+	void *mlx;
+	void *win;
+
+	mlx = mlx_init(); // Initialize MLX
+	win = mlx_new_window(mlx, 500, 500, "My Window"); // Create a 500x500 window
+
+	mlx_loop(mlx); // Start event loop
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:25:31 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/19 15:15:18 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:52:02 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <stdlib.h>
 # include <stdlib.h>
 # include "libft/libft.h"
+# include "mlx/mlx.h"
+# include "mlx/mlx_int.h"
 
 typedef struct s_items
 {
