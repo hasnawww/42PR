@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:20:50 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/20 20:08:47 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:50:34 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -357,14 +357,21 @@ int	close_win(t_data *mlx)
 int main()
 {
 	t_data	mlx;
+	char	*path = "./qlf.xpm";
+	int		w = 800;
+	int		height = 800;
+	void	*img;
 
 	mlx.ptr = mlx_init();
-	mlx.win = mlx_new_window(mlx.ptr, 1920, 1080, "Hello world!");
+	mlx.win = mlx_new_window(mlx.ptr, 800, 800, "Hello world!");
 	if (!mlx.win)
 	{
 		return (0);
 	}
 	mlx_hook(mlx.win, DestroyNotify, StructureNotifyMask, close_win, &mlx);
+	img = mlx_xpm_file_to_image(mlx.ptr, path, &w, &height);
+	mlx_put_image_to_window(mlx.ptr, mlx.win, img, w, height);
+	
 	mlx_loop(mlx.ptr);
 	free(mlx.ptr);
 	return (0);
