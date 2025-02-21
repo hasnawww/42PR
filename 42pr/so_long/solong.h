@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:25:31 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/19 16:52:02 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/02/20 20:01:40 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@
 # include "libft/libft.h"
 # include "mlx/mlx.h"
 # include "mlx/mlx_int.h"
+
+#define ESC = 53 
+
+typedef struct s_data {
+	void	*ptr;
+	void	*win;
+}	t_data;
 
 typedef struct s_items
 {

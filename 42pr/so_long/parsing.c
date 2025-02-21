@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:20:50 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/19 16:52:14 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/02/20 20:08:47 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -348,14 +348,24 @@ void	genkidama(t_map *map)
 // 	return(0);
 // }
 
+int	close_win(t_data *mlx)
+{
+		mlx_destroy_window(mlx->ptr, mlx->win);
+		exit(0);
+}
+
 int main()
 {
-	void *mlx;
-	void *win;
+	t_data	mlx;
 
-	mlx = mlx_init(); // Initialize MLX
-	win = mlx_new_window(mlx, 500, 500, "My Window"); // Create a 500x500 window
-
-	mlx_loop(mlx); // Start event loop
+	mlx.ptr = mlx_init();
+	mlx.win = mlx_new_window(mlx.ptr, 1920, 1080, "Hello world!");
+	if (!mlx.win)
+	{
+		return (0);
+	}
+	mlx_hook(mlx.win, DestroyNotify, StructureNotifyMask, close_win, &mlx);
+	mlx_loop(mlx.ptr);
+	free(mlx.ptr);
 	return (0);
 }
