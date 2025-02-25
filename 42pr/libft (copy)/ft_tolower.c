@@ -1,42 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/18 11:57:02 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/24 09:39:09 by ilhasnao         ###   ########.fr       */
+/*   Created: 2024/11/05 06:42:21 by ilhasnao          #+#    #+#             */
+/*   Updated: 2024/11/14 11:55:22 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include <unistd.h>
 
-int	main(int ac, char **av, char **envp)
+int	ft_tolower(int c)
 {
-	int		p[2];
-	__pid_t	pid;
-
-	if (ac == 5 && av[2][0] && av[3][0])
+	if (c >= 65 && c <= 90)
 	{
-		if (pipe(p) == -1)
-		{
-			perror("error");
-			exit(EXIT_FAILURE);
-		}
-		pid = fork ();
-		if (pid == -1)
-		{
-			perror("error");
-			exit(EXIT_FAILURE);
-		}
-		if (pid == 0)
-			child(p, av, envp);
-		else
-		{
-			waitpid(pid, NULL, 0);
-			parent(p, av, envp);
-		}
+		c = c + 32;
+		return (c);
 	}
-	return (0);
+	else
+	{
+		return (c);
+	}
 }
+
+// int	main (void)
+// {
+// 	int	a;
+// 	int	b;
+
+// 	a = 67;
+// 	b = ft_tolower(a);
+// 	write(1, &b, 1);
+// 	return (0);
+// }

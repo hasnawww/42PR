@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilhasnao <ilhasnao@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 09:33:00 by ilhasnao          #+#    #+#             */
-/*   Updated: 2025/02/24 19:01:05 by ilhasnao         ###   ########.fr       */
+/*   Created: 2024/11/12 06:43:15 by ilhasnao          #+#    #+#             */
+/*   Updated: 2024/11/12 06:55:19 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <unistd.h>
 
-size_t	ft_strlen(const char *c)
+void	ft_putstr_fd(char *s, int fd)
 {
-	int	i;
-
-	i = 0;
-	while (c[i] != '\0')
+	while (*s)
 	{
-		i++;
+		write(fd, s, 1);
+		s++;
 	}
-	return (i);
 }
 
-// int	main(void)
-// {
-// 	char	oui[] = "dewd";
-// 	printf("%zu",ft_strlen (oui));
-// 	return (0);
-// }
+/*int	main (void)
+{
+	int	d = 2;
+	char	t[] = "da gyal";
+
+	ft_putstr_fd(t, d);
+	return (0);
+}*/

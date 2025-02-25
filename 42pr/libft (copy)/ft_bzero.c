@@ -1,32 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilhasnao <ilhasnao@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 09:33:00 by ilhasnao          #+#    #+#             */
-/*   Updated: 2025/02/24 19:01:05 by ilhasnao         ###   ########.fr       */
+/*   Created: 2024/11/05 07:46:30 by ilhasnao          #+#    #+#             */
+/*   Updated: 2024/11/11 14:13:45 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include <stdlib.h>
 
-size_t	ft_strlen(const char *c)
+void	ft_bzero(void *s, size_t n)
 {
-	int	i;
+	unsigned char	*mem;
 
-	i = 0;
-	while (c[i] != '\0')
+	mem = s;
+	while (n--)
 	{
-		i++;
+		*mem++ = 0;
 	}
-	return (i);
 }
 
-// int	main(void)
-// {
-// 	char	oui[] = "dewd";
-// 	printf("%zu",ft_strlen (oui));
-// 	return (0);
-// }
+/*int	main(void)
+{
+	size_t	o = 10;
+	void	*test = malloc(o);
+
+	ft_bzero (test, o);
+	write(1, test, 0);
+	free (test);
+	return (0);
+}*/

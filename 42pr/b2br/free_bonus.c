@@ -1,42 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   free_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/18 11:57:02 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/24 09:39:09 by ilhasnao         ###   ########.fr       */
+/*   Created: 2025/02/24 20:19:24 by ilhasnao          #+#    #+#             */
+/*   Updated: 2025/02/24 20:20:55 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipexbonus.h"
 
-int	main(int ac, char **av, char **envp)
+void	free_lfile(int **pipes, int *pids, t_pipex_struct *pipex)
 {
-	int		p[2];
-	__pid_t	pid;
+	free(pids);
+	free_pipes(pipes, pipex->command_count - 1);
+	exit(1);
+}
 
-	if (ac == 5 && av[2][0] && av[3][0])
-	{
-		if (pipe(p) == -1)
-		{
-			perror("error");
-			exit(EXIT_FAILURE);
-		}
-		pid = fork ();
-		if (pid == -1)
-		{
-			perror("error");
-			exit(EXIT_FAILURE);
-		}
-		if (pid == 0)
-			child(p, av, envp);
-		else
-		{
-			waitpid(pid, NULL, 0);
-			parent(p, av, envp);
-		}
-	}
-	return (0);
+void	ft_error(char **cmd, int exit_code)
+{
+	dree_split(cmd);
+	perror("error");
+	exit(exit_code);
 }

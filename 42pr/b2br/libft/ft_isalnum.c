@@ -1,42 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/18 11:57:02 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/24 09:39:09 by ilhasnao         ###   ########.fr       */
+/*   Created: 2024/11/04 16:09:46 by ilhasnao          #+#    #+#             */
+/*   Updated: 2024/11/21 08:24:17 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int ac, char **av, char **envp)
+int	ft_isalnum(int c)
 {
-	int		p[2];
-	__pid_t	pid;
-
-	if (ac == 5 && av[2][0] && av[3][0])
+	if (((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+		|| (c >= '0' && c <= '9'))
 	{
-		if (pipe(p) == -1)
-		{
-			perror("error");
-			exit(EXIT_FAILURE);
-		}
-		pid = fork ();
-		if (pid == -1)
-		{
-			perror("error");
-			exit(EXIT_FAILURE);
-		}
-		if (pid == 0)
-			child(p, av, envp);
-		else
-		{
-			waitpid(pid, NULL, 0);
-			parent(p, av, envp);
-		}
+		return (1);
 	}
 	return (0);
 }
+
+/*int	main (void)
+{
+	int d;
+
+	d = 35;
+	printf ("%d", ft_isalnum(d));
+	return (0);
+}*/

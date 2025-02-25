@@ -1,3 +1,0 @@
-nikwebi
-tweaker
-fd = 3

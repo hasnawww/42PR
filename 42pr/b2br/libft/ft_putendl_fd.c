@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilhasnao <ilhasnao@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 09:33:00 by ilhasnao          #+#    #+#             */
-/*   Updated: 2025/02/24 19:01:05 by ilhasnao         ###   ########.fr       */
+/*   Created: 2024/11/12 06:58:56 by ilhasnao          #+#    #+#             */
+/*   Updated: 2024/11/12 07:05:20 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <unistd.h>
 
-size_t	ft_strlen(const char *c)
+void	ft_putendl_fd(char *s, int fd)
 {
-	int	i;
-
-	i = 0;
-	while (c[i] != '\0')
+	while (*s)
 	{
-		i++;
+		write(fd, s, 1);
+		s++;
 	}
-	return (i);
+	write(fd, "\n", 1);
 }
 
-// int	main(void)
-// {
-// 	char	oui[] = "dewd";
-// 	printf("%zu",ft_strlen (oui));
-// 	return (0);
-// }
+/*int	main(void)
+{
+	char	jaimejaimetesyeux[] = "ton regard tout";
+	int	d = 2;
+
+	ft_putendl_fd(jaimejaimetesyeux, d);
+	return (0);
+}*/

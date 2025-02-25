@@ -1,42 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/18 11:57:02 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/24 09:39:09 by ilhasnao         ###   ########.fr       */
+/*   Created: 2024/11/04 14:37:55 by ilhasnao          #+#    #+#             */
+/*   Updated: 2024/11/14 11:52:20 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include <stdio.h>
 
-int	main(int ac, char **av, char **envp)
+int	ft_isalpha(int c)
 {
-	int		p[2];
-	__pid_t	pid;
-
-	if (ac == 5 && av[2][0] && av[3][0])
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
 	{
-		if (pipe(p) == -1)
-		{
-			perror("error");
-			exit(EXIT_FAILURE);
-		}
-		pid = fork ();
-		if (pid == -1)
-		{
-			perror("error");
-			exit(EXIT_FAILURE);
-		}
-		if (pid == 0)
-			child(p, av, envp);
-		else
-		{
-			waitpid(pid, NULL, 0);
-			parent(p, av, envp);
-		}
+		return (1);
 	}
 	return (0);
 }
+
+/*int	main (void)
+{
+	int d;
+
+	d = 'A';
+	printf("%d", ft_isalpha(d));
+	return (0);
+}*/

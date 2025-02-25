@@ -1,42 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/18 11:57:02 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/24 09:39:09 by ilhasnao         ###   ########.fr       */
+/*   Created: 2024/11/04 09:50:03 by ilhasnao          #+#    #+#             */
+/*   Updated: 2024/11/18 11:11:38 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include <stdio.h>
 
-int	main(int ac, char **av, char **envp)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int		p[2];
-	__pid_t	pid;
+	size_t	i;
 
-	if (ac == 5 && av[2][0] && av[3][0])
+	i = 0;
+	if (n == 0)
 	{
-		if (pipe(p) == -1)
+		return (0);
+	}
+	while (s1[i] != '\0' && s2[i] != '\0' && i < n)
+	{
+		if (s1[i] != s2[i])
 		{
-			perror("error");
-			exit(EXIT_FAILURE);
+			return (s1[i] - s2[i]);
 		}
-		pid = fork ();
-		if (pid == -1)
-		{
-			perror("error");
-			exit(EXIT_FAILURE);
-		}
-		if (pid == 0)
-			child(p, av, envp);
-		else
-		{
-			waitpid(pid, NULL, 0);
-			parent(p, av, envp);
-		}
+		i++;
+	}
+	if (i < n)
+	{
+		return (s1[i] - s2[i]);
 	}
 	return (0);
 }
+
+// int	main (void)
+// {
+// 	int	n = 5;
+// 	char	s1[] = "dddd";
+// 	char	s2[] = "dddc";
+
+// 	printf("%d", ft_strncmp(s1, s2, n));
+// 	return (0);
+// }
