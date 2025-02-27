@@ -6,7 +6,7 @@
 #    By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/24 14:33:52 by ilhasnao          #+#    #+#              #
-#    Updated: 2025/02/19 16:47:18 by ilhasnao         ###   ########.fr        #
+#    Updated: 2025/02/25 15:28:32 by ilhasnao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LIBFT = libft/
 RM = rm -f
 MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11 -lm
 
-SRC_1 = parsing.c map_init.c
+SRC_1 = parsing.c map_init.c mlx.c
 
 OBJ_1 = $(SRC_1:.c=.o)
 

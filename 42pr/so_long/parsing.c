@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:20:50 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/21 15:50:34 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/02/26 20:49:13 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ void	big_free(char **map)
 	int	i;
 
 	i = 0;
+	if (!map)
+		return;
 	while (map[i])
 	{
 		free(map[i]);
@@ -265,59 +267,26 @@ void	parsing(char **av, t_map *map)
 		ft_error(map, FLOOD_FILL);
 }
 
-// int	parsing(char **av, t_map *map)
-// {
-// 	int	Cs;
-
-// 	Cs = get_Cs(map->lines);
-// 	printf("CS = %d\n", Cs);
-// 	is_ber(av[1]);
-// 	is_rectangular(map);
-// 	check_characters(map->lines);
-// 	vertical_border(map->lines); 
-// 	if (horizontal_border(map->lines[0]);
-// 	horizontal_border(map->lines[count_lines(map->lines) - 1]);
-// 	flood_fill(map->x, map->y, map);
-// 	if ((map->map_items->C_coin != Cs)
-// 			&& map->map_items->E_coin != 1)
-// 		ft_error(map, FLOOD_FILL);
-// }
-
-
-// int	parsing(char **av, int ac)
-// {
-// 	t_map	*map;
-// 	int		x;
-// 	int		y;
-// 	int		Cs;
-
-// 	Cs = get_Cs(map->lines);
-// 	if (ac == 2)
-// 	{
-// 		if (is_ber(av[1]))
-// 		{
-// 			flood_fill(x, y, map);
-// 		}
-// 		if ((map->map_items->C_coin == Cs)
-// 		 && map->map_items->E_coin == 1)
-// 			printf("La carte est valide\n");
-// 		else
-// 			printf("La carte n'est pas valide\n");
-// 		printf("%d\n", Cs);
-// 	}
-// 	return(0);
-// }
-
-void	print_map(t_map *map)
+void	print_map(char **map)
 {
 	int	x;
 	int	y;
 
+	// if (!map)
+	// {
+	// 	// printf("map[x] = %s\n", map[0]);
+	// 	printf("Error: map is NULL\n");
+	// 	return;
+	// }
 	x = 0;
-	y = 0;
-	while (map->copy[x])
+	while (map[x])
 	{
-		printf("%s", map->copy[x]);
+		y = 0;
+		while (map[x][y])
+		{
+			ft_putchar_fd(map[x][y], 1);
+			y++;
+		}
 		x++;
 	}
 }
@@ -325,54 +294,8 @@ void	print_map(t_map *map)
 void	genkidama(t_map *map)
 {
 	big_free(map->lines);
-	big_free(map->copy);
+	if (map->copy)
+		big_free(map->copy);
 	free(map->map_items);
-	free(map);
-}
-
-// int	main(int ac, char **av)
-// {
-// 	t_map	*map;
-
-// 	map = malloc(sizeof(t_map));
-// 	if (ac == 2)
-// 	{
-// 		map_init(map, av);
-// 	// if (parsing(av, map))
-// 	// 	printf("la map est valideuh\n");
-// 	// else
-// 	// 	printf("non\n");
-// 		parsing(av, map);
-// 		genkidama(map);
-// 	}
-// 	return(0);
-// }
-
-int	close_win(t_data *mlx)
-{
-		mlx_destroy_window(mlx->ptr, mlx->win);
-		exit(0);
-}
-
-int main()
-{
-	t_data	mlx;
-	char	*path = "./qlf.xpm";
-	int		w = 800;
-	int		height = 800;
-	void	*img;
-
-	mlx.ptr = mlx_init();
-	mlx.win = mlx_new_window(mlx.ptr, 800, 800, "Hello world!");
-	if (!mlx.win)
-	{
-		return (0);
-	}
-	mlx_hook(mlx.win, DestroyNotify, StructureNotifyMask, close_win, &mlx);
-	img = mlx_xpm_file_to_image(mlx.ptr, path, &w, &height);
-	mlx_put_image_to_window(mlx.ptr, mlx.win, img, w, height);
-	
-	mlx_loop(mlx.ptr);
-	free(mlx.ptr);
-	return (0);
+	// free(map);
 }
