@@ -6,7 +6,7 @@
 #    By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/24 14:33:52 by ilhasnao          #+#    #+#              #
-#    Updated: 2025/02/28 00:30:05 by ilhasnao         ###   ########.fr        #
+#    Updated: 2025/02/28 01:40:21 by ilhasnao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ CYAN = \033[1;96m
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(PINK)I'm compiling hbibi!$(DEF_COLOR)"
 	
-$(NAME): $(OBJ_1)
+$(NAME): mlx $(OBJ_1)
 		@make -C $(LIBFT)
 		@${CC} ${CFLAGS} ${OBJ_1} -o ${NAME} ${INCLUDE} $(MLX_FLAGS)
 		@echo "$(GREEN)Its compiled hbibi!$(DEF_COLOR)"
@@ -45,6 +45,7 @@ all: ${NAME}
 
 clean:
 		@${RM} ${OBJ_1} ${NAME}
+		@rm -rf mlx
 		@cd ${LIBFT} && $(MAKE) clean
 		@echo "$(CYAN)I'm cleaning hbibi!$(DEF_COLOR)"
 
