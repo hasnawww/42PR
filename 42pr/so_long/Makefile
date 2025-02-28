@@ -6,13 +6,13 @@
 #    By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/24 14:33:52 by ilhasnao          #+#    #+#              #
-#    Updated: 2025/02/25 15:28:32 by ilhasnao         ###   ########.fr        #
+#    Updated: 2025/02/28 00:30:05 by ilhasnao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
 LIBFT = libft/
 RM = rm -f
 MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11 -lm

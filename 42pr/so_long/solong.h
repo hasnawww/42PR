@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:25:31 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/26 19:34:19 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/02/28 01:08:12 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,8 @@
 # include "mlx/mlx.h"
 # include "mlx/mlx_int.h"
 
-#define ESC 53
+#define ESC 65307
 #define TILE_SIZE 64
-
-typedef struct s_data {
-	void	*ptr;
-	void	*win;
-	void	*wall;
-	void	*floor;
-	void	*player;
-	void	*coin;
-	void	*exit;
-	char	*path_wall;
-	char	*path_floor;
-	char	*path_player;
-	int		win_y;
-	int		win_x;
-	int		img_x;
-	int		img_y;
-}	t_data;
 
 typedef struct s_items
 {
@@ -59,6 +42,27 @@ typedef struct s_map
 	int				y;
 	t_items			*map_items;
 }	t_map;
+
+
+typedef struct s_data {
+	void	*ptr;
+	void	*win;
+	void	*wall;
+	void	*floor;
+	void	*player;
+	void	*coin;
+	void	*exit;
+	char	*path_exit;
+	char	*path_coin;
+	char	*path_wall;
+	char	*path_floor;
+	char	*path_player;
+	int		win_y;
+	int		win_x;
+	int		img_x;
+	int		img_y;
+	t_map	*map;
+}	t_data;
 
 int		map_init(t_map *map, char **av);
 void	get_coordinates(char **map, int *x, int *y);
@@ -81,5 +85,9 @@ void	parsing(char **av, t_map *map);
 void	print_map(char **map);
 void	genkidama(t_map *map);
 int		close_win(int keycode, void *mlx);
+void	move_right(t_data *mlx);
+void	move_left(t_data *mlx);
+void	move_up(t_data *mlx);
+void	move_down(t_data *mlx);
 
 #endif

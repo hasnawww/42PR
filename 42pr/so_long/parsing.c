@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:20:50 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/26 20:49:13 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/02/28 01:23:50 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,7 +251,6 @@ void	parsing(char **av, t_map *map)
 	int	Cs;
 
 	Cs = get_Cs(map->lines);
-	printf("CS = %d\n", Cs);
 	if (!is_ber(av[1]))
 		ft_error(map, FILE_EXTENSION);
 	if (!is_rectangular(map))
@@ -293,9 +292,17 @@ void	print_map(char **map)
 
 void	genkidama(t_map *map)
 {
-	big_free(map->lines);
-	if (map->copy)
+	if (map->lines) 
+	{
+		big_free(map->lines);
+	}
+	if (map->copy) 
+	{
 		big_free(map->copy);
-	free(map->map_items);
-	// free(map);
+	}
+	if (map->map_items) 
+	{
+		free(map->map_items);
+	}
+	free(map);
 }
