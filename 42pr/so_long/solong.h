@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:25:31 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/28 01:28:44 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/02/28 15:32:44 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ typedef struct s_data {
 	int		win_x;
 	int		img_x;
 	int		img_y;
+	int		move_count;
+	int		first_token;
 	t_map	*map;
 }	t_data;
 
@@ -89,5 +91,6 @@ void	move_right(t_data *mlx);
 void	move_left(t_data *mlx);
 void	move_up(t_data *mlx);
 void	move_down(t_data *mlx);
+void	move_writing(t_data *mlx);
 
 #endif

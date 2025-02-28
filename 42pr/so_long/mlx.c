@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:17:10 by ilhasnao          #+#    #+#             */
-/*   Updated: 2025/02/28 01:23:45 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/02/28 17:16:05 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	init_window(t_data *mlx)
 		ft_putstr_fd("Error: Failed to create window\n", 2);
 		mlx_loop_end(mlx->ptr);
 	}
+	mlx->move_count = 0;
+	move_writing(mlx);
 }
 
 void	put_image(char c, t_data *mlx, int i, int j)
@@ -98,6 +100,7 @@ void	render_map(char **map, t_data *mlx)
 		}
 		i++;
 	}
+	move_writing(mlx);
 }
 
 int	free_all (t_data *mlx)
@@ -134,8 +137,7 @@ void	move_up(t_data *mlx)
 	get_coordinates(mlx->map->lines, &x, &y);
 	if (mlx->map->lines[x - 1][y] == '1')
 		return ;
-	if (mlx->map->lines[x - 1][y] == 'E'
-		&& mlx->map->map_items->C_coin != 0)
+	if (mlx->map->lines[x - 1][y] == 'E' && mlx->map->map_items->C_coin != 0)
 		return ;
 	else if (mlx->map->lines[x - 1][y] == 'E'
 		&& mlx->map->map_items->C_coin == 0)
@@ -151,6 +153,7 @@ void	move_up(t_data *mlx)
 		mlx->map->lines[x - 1][y] = 'P';
 		mlx->map->lines[x][y] = '0';
 	}
+	mlx->move_count++;
 	render_map(mlx->map->lines, mlx);
 }
 
@@ -162,8 +165,7 @@ void	move_down(t_data *mlx)
 	get_coordinates(mlx->map->lines, &x, &y);
 	if (mlx->map->lines[x + 1][y] == '1')
 		return ;
-	if (mlx->map->lines[x + 1][y] == 'E'
-		&& mlx->map->map_items->C_coin != 0)
+	if (mlx->map->lines[x + 1][y] == 'E' && mlx->map->map_items->C_coin != 0)
 		return ;
 	else if (mlx->map->lines[x + 1][y] == 'E'
 		&& mlx->map->map_items->C_coin == 0)
@@ -179,19 +181,80 @@ void	move_down(t_data *mlx)
 		mlx->map->lines[x + 1][y] = 'P';
 		mlx->map->lines[x][y] = '0';
 	}
+	mlx->move_count++;
 	render_map(mlx->map->lines, mlx);
+}
+
+int find_first_y(t_data *mlx, char type)
+{
+	int y;
+	int x;
+
+	y = 0;
+	while (mlx->map->lines[y])
+	{
+		x = 0;
+		while (mlx->map->lines[y][x])
+		{
+			if (mlx->map->lines[y][x] == type)
+				return (y);
+			x++;
+		}
+		y++;
+	}
+	return (-1);
+}
+
+int find_first_x(t_data *mlx, char type)
+{
+	int y;
+	int x;
+
+	y = 0;
+	while (mlx->map->lines[y])
+	{
+		x = 0;
+		while (mlx->map->lines[y][x])
+		{
+			if (mlx->map->lines[y][x] == type)
+				return (x);
+			x++;
+		}
+		y++;
+	}
+	return (-1);
+}
+
+void	move_writing(t_data *mlx)
+{
+	char	*str;
+	char	*temp;
+	// int		x;
+	// int		y;
+	
+	// x = (find_first_x(mlx, '0') + 1) * 64;
+	// y = (find_first_y(mlx, '0') - 1) * 64;
+	// if (x < 0 || y < 0)
+	// 	return ;
+	temp = ft_itoa(mlx->move_count);
+	str = ft_strjoin("number of moves: ", temp);
+	if (!str)
+		return;
+	mlx_string_put(mlx->ptr, mlx->win, 10, 10, 0xFFFFFF, str);
+	free(str);
+	free(temp);
+	// ft_putstr_fd("\n", 1);
 }
 
 void	move_right(t_data *mlx)
 {
-int	x;
+	int	x;
 	int	y;
 
 	get_coordinates(mlx->map->lines, &x, &y);
 	if (mlx->map->lines[x][y + 1] == '1')
 		return ;
-	if (mlx->map->lines[x][y + 1] == 'E'
-		&& mlx->map->map_items->C_coin != 0)
+	if (mlx->map->lines[x][y + 1] == 'E' && mlx->map->map_items->C_coin != 0)
 		return ;
 	else if (mlx->map->lines[x][y + 1] == 'E'
 		&& mlx->map->map_items->C_coin == 0)
@@ -207,6 +270,7 @@ int	x;
 		mlx->map->lines[x][y + 1] = 'P';
 		mlx->map->lines[x][y] = '0';
 	}
+	mlx->move_count++;
 	render_map(mlx->map->lines, mlx);
 }
 
@@ -218,8 +282,7 @@ void	move_left(t_data *mlx)
 	get_coordinates(mlx->map->lines, &x, &y);
 	if (mlx->map->lines[x][y - 1] == '1')
 		return ;
-	if (mlx->map->lines[x][y - 1] == 'E'
-		&& mlx->map->map_items->C_coin != 0)
+	if (mlx->map->lines[x][y - 1] == 'E' && mlx->map->map_items->C_coin != 0)
 		return ;
 	else if (mlx->map->lines[x][y - 1] == 'E'
 		&& mlx->map->map_items->C_coin == 0)
@@ -235,23 +298,20 @@ void	move_left(t_data *mlx)
 		mlx->map->lines[x][y - 1] = 'P';
 		mlx->map->lines[x][y] = '0';
 	}
+	mlx->move_count++;
 	render_map(mlx->map->lines, mlx);
 }
 
 int	main(int ac, char **av)
 {
 	t_data	*mlx;
-	// int	i;
 
-	// i = 0;
 	if (ac == 2)
 	{
 		mlx = malloc(sizeof(t_data));
 		mlx->map = malloc(sizeof(t_map));
 		map_init(mlx->map, av);
 		parsing(av, mlx->map);
-		// genkidama(mlx->map);
-		// free(mlx);
 		my_mlx_init(mlx);
 		init_window(mlx);
 		render_map(mlx->map->lines, mlx);
