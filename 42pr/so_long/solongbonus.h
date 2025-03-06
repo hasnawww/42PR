@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   solong.h                                           :+:      :+:    :+:   */
+/*   solongbonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:25:31 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/03/06 12:45:02 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:08:00 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef SOLONG_H
-# define SOLONG_H
+# ifndef SOLONGBONUS_H
+# define SOLONGBONUS_H
 
-#include "errordef.h"
+#include "errordefbonus.h"
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -25,14 +25,17 @@
 #define ESC 65307
 #define TILE_SIZE 64
 
-typedef struct s_items
+typedef struct s_itemsb
 {
 	int			C_coin;
 	int			E_coin;
-	int			P_coin;
-}	t_items;
+	int			cc;
+	int			ee;
+	int			pp;
+	int			oo;
+}	t_itemsb;
 
-typedef struct s_map
+typedef struct s_mapb
 {
 	char			**lines;
 	char			**copy;
@@ -40,17 +43,20 @@ typedef struct s_map
 	int				height;
 	int				x;
 	int				y;
-	t_items			*map_items;
-}	t_map;
+	t_itemsb			*map_items;
+}	t_mapb;
 
-typedef struct s_data {
+typedef struct s_datab {
 	void	*ptr;
 	void	*win;
-	void	*wall;
-	void	*floor;
-	void	*player;
-	void	*coin;
-	void	*exit;
+	void	*wall_frames[4];
+	void	*floor_frames[4];
+	void	*player_frames[4];
+	void	*coin_frames[4];
+	void	*exit_frames[4];
+	void	*opps_frames[4];
+	int		current_frame;
+	int		frame_counter;
 	char	*path_exit;
 	char	*path_coin;
 	char	*path_wall;
@@ -66,10 +72,11 @@ typedef struct s_data {
 	int		cam_y;
 	int		cam_length;
 	int		cam_height;
-	t_map	*map;
-}	t_data;
+	t_mapb	*map;
+}	t_datab;
 
-int		map_init(t_map *map, char **av);
+
+int		map_initb(t_mapb *map, char **av);
 void	get_coordinates(char **map, int *x, int *y);
 int		ft_strlength(const char *c);
 int		count_lines(char **map);
@@ -81,21 +88,24 @@ void	ft_error();
 void	big_free(char **map);
 int		valid_characters(char c, int *C_coin);
 int		duplicate_characters(char c, int *E_coin, int *P_coin);
-void	check_characters(t_map *map);
-int		is_rectangular(t_map *map);
+void	check_charactersb(t_datab *mlx);
+int		is_rectangularb(t_mapb *map);
 int		get_Cs(char **map);
 char	**map_copy(char **map);
-void	flood_fill(int x, int y, t_map *map);
-void	parsing(char **av, t_map *map);
+void	flood_fillb(int x, int y, t_mapb *map);
+void	parsingb(char **av, t_datab *map);
 void	print_map(char **map);
-void	genkidama(t_map *map);
+void	genkidamab(t_datab *map);
 int		close_win(int keycode, void *mlx);
-void	move_right(t_data *mlx);
-void	move_left(t_data *mlx);
-void	move_up(t_data *mlx);
-void	move_down(t_data *mlx);
-void	move_writing(t_data *mlx);
-void	update_cam(t_data *mlx);
-void	init_cam(t_data *mlx);
+void	move_rightb(t_datab *mlx);
+void	move_leftb(t_datab *mlx);
+void	move_upb(t_datab *mlx);
+void	move_downb(t_datab *mlx);
+void	move_writingb(t_datab *mlx);
+void	update_camb(t_datab *mlx);
+void	init_camb(t_datab *mlx);
+void	destroy_frames(t_datab *mlx);
+void	init_frames1(t_datab *mlx);
+void	init_frames2(t_datab *mlx);
 
 #endif

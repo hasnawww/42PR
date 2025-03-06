@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   parsing_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:20:50 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/03/06 16:10:38 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:08:19 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "solong.h"
-#include "errordef.h"
+#include "solongbonus.h"
+#include "errordefbonus.h"
 
 int	ft_strlength(const char *c)
 {
@@ -101,10 +101,10 @@ int	vertical_border(char **map)
 	return (1);
 }
 
-void	ft_error(t_map *map, char *msg)
+void	ft_error(t_datab *map, char *msg)
 {
 	if (map)
-		genkidama(map);
+		genkidamab(map);
 	ft_putstr_fd("ERROR: ", 2);
 	ft_putstr_fd(msg, 2);
 	ft_putstr_fd("\n", 2);
@@ -126,14 +126,19 @@ void	big_free(char **map)
 	free(map);
 }
  
-int	valid_characters(char c, int *C_coin)
+int	valid_charactersb(char c, int *C_coin, int *O_coin)
 {
 	if (c == 'C' && *C_coin == 0)
 	{
 		*C_coin = 1;
 		return (1);
 	}
-	if (c == '1' || c == '0' || c == 'C')
+	if (c == 'O' && *O_coin == 0)
+	{
+		*O_coin = 1;
+		return (1);
+	}
+	if (c == '1' || c == '0' || c == 'C' || c == 'O')
 	{
 		return (1);
 	}
@@ -155,37 +160,32 @@ int	duplicate_characters(char c, int *E_coin, int *P_coin)
 	return (0);
 }
 
-void	check_characters(t_map *map)
+void	check_charactersb(t_datab *mlx)
 {
 	int		i;
 	int		j;
-	int		E_coin;
-	int		P_coin;
-	int		C_coin;
 
 	i = 0;
-	C_coin = 0;
-	E_coin = 0;
-	P_coin = 0;
-	while(map->lines[i])
+	while(mlx->map->lines[i])
 	{
 		j = 0;
-		while(map->lines[i][j])
+		while(mlx->map->lines[i][j])
 		{
-			if (valid_characters(map->lines[i][j], &C_coin) || map->lines[i][j] == '\n')
+			if (valid_charactersb(mlx->map->lines[i][j], &mlx->map->map_items->cc, &mlx->map->map_items->oo) || mlx->map->lines[i][j] == '\n')
 				j++;
-			else if (duplicate_characters(map->lines[i][j], &E_coin, &P_coin))
+			else if (duplicate_characters(mlx->map->lines[i][j], &mlx->map->map_items->ee, &mlx->map->map_items->pp))
 				j++;
 			else
-				ft_error(map, BAD_SYMBOL);
+				ft_error(mlx, BAD_SYMBOL_B);
 		}
 		i++;
 	}
-	if (E_coin == 0|| P_coin == 0 || C_coin == 0)
-		ft_error(map, MISSING_SYMBOL);
+	if (mlx->map->map_items->ee == 0|| mlx->map->map_items->pp == 0
+			 || mlx->map->map_items->cc == 0 || mlx->map->map_items->oo == 0)
+		ft_error(mlx, MISSING_SYMBOL_B);
 }
 
-int	is_rectangular(t_map *map)
+int	is_rectangularb(t_mapb *map)
 {
 	int	i;
 	
@@ -203,35 +203,34 @@ int	is_rectangular(t_map *map)
 
 int	get_Cs(char **map)
 {
-	int	C;
+	int	c;
 	int	x;
 	int	y;
 
 	x = 0;
 	y = 0;
-	C = 0;
+	c = 0;
 	while (map[x])
 	{
 		y = 0;
 		while (map[x][y])
 		{
 			if (map[x][y] == 'C')
-				C++;
+				c++;
 			y++;
 		}
 		x++;
 	}
-	return(C);
+	return(c);
 }
 
-void	flood_fill(int x, int y, t_map *map)
+void	flood_fillb(int x, int y, t_mapb *map)
 {
 	if (x < 0 || y < 0 || x >= map->height || y >= map->length)
-	{
-		printf("2141431");
 		return ;
-	}
 	if (map->copy[x][y] == 'V' || map->copy[x][y] == '1')
+		return ;
+	if (map->copy[x][y] == 'O')
 		return ;
 	if (map->copy[x][y] == 'E')
 		map->map_items->E_coin = 1;
@@ -239,30 +238,30 @@ void	flood_fill(int x, int y, t_map *map)
 		map->map_items->C_coin += 1;
 	if (map->copy[x][y] == '0' || map->copy[x][y] == 'C')
 		map->copy[x][y] = 'V';
-	flood_fill(x + 1, y, map);
-	flood_fill(x, y + 1, map);
-	flood_fill(x - 1, y, map);
-	flood_fill(x, y - 1, map);
+	flood_fillb(x + 1, y, map);
+	flood_fillb(x, y + 1, map);
+	flood_fillb(x - 1, y, map);
+	flood_fillb(x, y - 1, map);
 }
 
-void	parsing(char **av, t_map *map)
+void	parsingb(char **av, t_datab *mlx)
 {
 	int	Cs;
 
-	Cs = get_Cs(map->lines);
+	Cs = get_Cs(mlx->map->lines);
 	if (!is_ber(av[1]))
-		ft_error(map, FILE_EXTENSION);
-	if (!is_rectangular(map))
-		ft_error(map, MAP_FORM);
-	check_characters(map);
-	if (!((vertical_border(map->lines)) 
-			&& (horizontal_border(map->lines[0])) 
-				&& (horizontal_border(map->lines[count_lines(map->lines) - 1]))))
-		ft_error(map, MAP_BORDER);
-	flood_fill(map->y, map->x, map);
-	if ((map->map_items->C_coin != Cs)
-			&& map->map_items->E_coin != 1)
-		ft_error(map, FLOOD_FILL);
+		ft_error(mlx, FILE_EXTENSION_B);
+	if (!is_rectangularb(mlx->map))
+		ft_error(mlx, MAP_FORM);
+	check_charactersb(mlx);
+	if (!((vertical_border(mlx->map->lines)) 
+			&& (horizontal_border(mlx->map->lines[0])) 
+				&& (horizontal_border(mlx->map->lines[count_lines(mlx->map->lines) - 1]))))
+		ft_error(mlx, MAP_BORDER_B);
+	flood_fillb(mlx->map->y, mlx->map->x, mlx->map);
+	if ((mlx->map->map_items->C_coin != Cs)
+			&& mlx->map->map_items->E_coin != 1)
+		ft_error(mlx, FLOOD_FILL_B);
 }
 
 void	print_map(char **map)
@@ -283,19 +282,14 @@ void	print_map(char **map)
 	}
 }
 
-void	genkidama(t_map *map)
+void	genkidamab(t_datab *map)
 {
-	if (map->lines) 
-	{
-		big_free(map->lines);
-	}
-	if (map->copy) 
-	{
-		big_free(map->copy);
-	}
-	if (map->map_items) 
-	{
-		free(map->map_items);
-	}
+	if (map->map->lines) 
+		big_free(map->map->lines);
+	if (map->map->copy)
+		big_free(map->map->copy);
+	if (map->map->map_items) 
+		free(map->map->map_items);
+	free(map->map);
 	free(map);
 }
