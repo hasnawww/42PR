@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 19:17:31 by ilhasnao          #+#    #+#             */
-/*   Updated: 2025/02/26 20:47:40 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/03/02 01:38:07 by hasnawww         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	get_coordinates(char **map, int *x, int *y)
 		{
 			if (map[i][j] == 'P')
 			{
-				*x = i;
-				*y = j;
+				*y = i;
+				*x = j;
 				return ;
 			}
 			j++;

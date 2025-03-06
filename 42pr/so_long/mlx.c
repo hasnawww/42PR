@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:17:10 by ilhasnao          #+#    #+#             */
-/*   Updated: 2025/02/28 17:16:05 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/03/02 02:28:39 by hasnawww         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	my_mlx_init(t_data *mlx)
 		ft_putstr_fd("Error: MLX initialization failed\n", 2);
 		exit(1);
 	}
+	init_cam(mlx);
+	update_cam(mlx);
 	mlx->path_wall = "textures/wall.xpm";
 	mlx->path_floor = "textures/floor.xpm";
 	mlx->path_player = "textures/player.xpm";
@@ -55,7 +57,7 @@ void	my_mlx_init(t_data *mlx)
 
 void	init_window(t_data *mlx)
 {
-	mlx->win = mlx_new_window(mlx->ptr, mlx->map->length * 64, mlx->map->height * 64, "So long");
+	mlx->win = mlx_new_window(mlx->ptr, mlx->cam_length * 64, mlx->cam_height * 64, "So long");
 	if (!mlx->win)
 	{
 		ft_putstr_fd("Error: Failed to create window\n", 2);
@@ -67,21 +69,26 @@ void	init_window(t_data *mlx)
 
 void	put_image(char c, t_data *mlx, int i, int j)
 {
+	int	x;
+	int	y;
+
+	x = (j - mlx->cam_x) * 64;
+	y = (i - mlx->cam_y) * 64;
 	if (c == '1')
 		mlx_put_image_to_window(mlx->ptr, 
-				mlx->win, mlx->wall, j * TILE_SIZE, i * TILE_SIZE);
+				mlx->win, mlx->wall, x, y);
 	else if (c == '0')
 		mlx_put_image_to_window(mlx->ptr, 
-				mlx->win, mlx->floor, j * TILE_SIZE, i * TILE_SIZE);
+				mlx->win, mlx->floor, x, y);
 	else if (c == 'P')
 		mlx_put_image_to_window(mlx->ptr, 
-				mlx->win, mlx->player, j * TILE_SIZE, i * TILE_SIZE);
+				mlx->win, mlx->player, x, y);
 	else if (c == 'C')
 		mlx_put_image_to_window(mlx->ptr, 
-						mlx->win, mlx->coin, j * TILE_SIZE, i * TILE_SIZE);
+						mlx->win, mlx->coin, x, y);
 	else if (c == 'E')
 		mlx_put_image_to_window(mlx->ptr, 
-						mlx->win, mlx->exit, j * TILE_SIZE, i * TILE_SIZE);
+						mlx->win, mlx->exit, x, y);
 }
 
 void	render_map(char **map, t_data *mlx)
@@ -89,13 +96,15 @@ void	render_map(char **map, t_data *mlx)
 	int	i;
 	int	j;
 
-	i = 0;
-	while (map[i])
+	i = mlx->cam_y;
+	while (i < mlx->cam_y + mlx->cam_height && i < mlx->map->height)
 	{
-		j = 0;
-		while (map[i][j])
+		j = mlx->cam_x;
+		while (j < mlx->cam_x + mlx->cam_length && j < mlx->map->length)
 		{
-			put_image(map[i][j], mlx, i, j);
+			if (i >= 0 && i < mlx->map->height
+					&& j >= 0 && j < mlx->map->length)
+				put_image(map[i][j], mlx, i, j);
 			j++;
 		}
 		i++;
@@ -135,26 +144,27 @@ void	move_up(t_data *mlx)
 	int	y;
 
 	get_coordinates(mlx->map->lines, &x, &y);
-	if (mlx->map->lines[x - 1][y] == '1')
+	if (mlx->map->lines[y - 1][x] == '1')
 		return ;
-	if (mlx->map->lines[x - 1][y] == 'E' && mlx->map->map_items->C_coin != 0)
+	if (mlx->map->lines[y - 1][x] == 'E' && mlx->map->map_items->C_coin != 0)
 		return ;
-	else if (mlx->map->lines[x - 1][y] == 'E'
+	else if (mlx->map->lines[y - 1][x] == 'E'
 		&& mlx->map->map_items->C_coin == 0)
 		mlx_loop_end(mlx->ptr);
-	else if (mlx->map->lines[x - 1][y] == 'C')
+	else if (mlx->map->lines[y - 1][x] == 'C')
 	{
-		mlx->map->lines[x - 1][y] = 'P';
-		mlx->map->lines[x][y] = '0';
+		mlx->map->lines[y - 1][x] = 'P';
+		mlx->map->lines[y][x] = '0';
 		mlx->map->map_items->C_coin--;
 	}
-	else if (mlx->map->lines[x - 1][y] == '0')
+	else if (mlx->map->lines[y - 1][x] == '0')
 	{
-		mlx->map->lines[x - 1][y] = 'P';
-		mlx->map->lines[x][y] = '0';
+		mlx->map->lines[y - 1][x] = 'P';
+		mlx->map->lines[y][x] = '0';
 	}
 	mlx->move_count++;
 	render_map(mlx->map->lines, mlx);
+	update_cam(mlx);
 }
 
 void	move_down(t_data *mlx)
@@ -163,79 +173,34 @@ void	move_down(t_data *mlx)
 	int	y;
 
 	get_coordinates(mlx->map->lines, &x, &y);
-	if (mlx->map->lines[x + 1][y] == '1')
+	if (mlx->map->lines[y + 1][x] == '1')
 		return ;
-	if (mlx->map->lines[x + 1][y] == 'E' && mlx->map->map_items->C_coin != 0)
+	if (mlx->map->lines[y + 1][x] == 'E' && mlx->map->map_items->C_coin != 0)
 		return ;
-	else if (mlx->map->lines[x + 1][y] == 'E'
+	else if (mlx->map->lines[y + 1][x] == 'E'
 		&& mlx->map->map_items->C_coin == 0)
 		mlx_loop_end(mlx->ptr);
-	else if (mlx->map->lines[x + 1][y] == 'C')
+	else if (mlx->map->lines[y + 1][x] == 'C')
 	{
-		mlx->map->lines[x + 1][y] = 'P';
-		mlx->map->lines[x][y] = '0';
+		mlx->map->lines[y + 1][x] = 'P';
+		mlx->map->lines[y][x] = '0';
 		mlx->map->map_items->C_coin--;
 	}
-	else if (mlx->map->lines[x + 1][y] == '0')
+	else if (mlx->map->lines[y + 1][x] == '0')
 	{
-		mlx->map->lines[x + 1][y] = 'P';
-		mlx->map->lines[x][y] = '0';
+		mlx->map->lines[y + 1][x] = 'P';
+		mlx->map->lines[y][x] = '0';
 	}
 	mlx->move_count++;
 	render_map(mlx->map->lines, mlx);
-}
-
-int find_first_y(t_data *mlx, char type)
-{
-	int y;
-	int x;
-
-	y = 0;
-	while (mlx->map->lines[y])
-	{
-		x = 0;
-		while (mlx->map->lines[y][x])
-		{
-			if (mlx->map->lines[y][x] == type)
-				return (y);
-			x++;
-		}
-		y++;
-	}
-	return (-1);
-}
-
-int find_first_x(t_data *mlx, char type)
-{
-	int y;
-	int x;
-
-	y = 0;
-	while (mlx->map->lines[y])
-	{
-		x = 0;
-		while (mlx->map->lines[y][x])
-		{
-			if (mlx->map->lines[y][x] == type)
-				return (x);
-			x++;
-		}
-		y++;
-	}
-	return (-1);
+	update_cam(mlx);
 }
 
 void	move_writing(t_data *mlx)
 {
 	char	*str;
 	char	*temp;
-	// int		x;
-	// int		y;
-	
-	// x = (find_first_x(mlx, '0') + 1) * 64;
-	// y = (find_first_y(mlx, '0') - 1) * 64;
-	// if (x < 0 || y < 0)
-	// 	return ;
+
 	temp = ft_itoa(mlx->move_count);
 	str = ft_strjoin("number of moves: ", temp);
 	if (!str)
@@ -243,7 +208,6 @@ void	move_writing(t_data *mlx)
 	mlx_string_put(mlx->ptr, mlx->win, 10, 10, 0xFFFFFF, str);
 	free(str);
 	free(temp);
-	// ft_putstr_fd("\n", 1);
 }
 
 void	move_right(t_data *mlx)
@@ -252,26 +216,27 @@ void	move_right(t_data *mlx)
 	int	y;
 
 	get_coordinates(mlx->map->lines, &x, &y);
-	if (mlx->map->lines[x][y + 1] == '1')
+	if (mlx->map->lines[y][x + 1] == '1')
 		return ;
-	if (mlx->map->lines[x][y + 1] == 'E' && mlx->map->map_items->C_coin != 0)
+	if (mlx->map->lines[y][x + 1] == 'E' && mlx->map->map_items->C_coin != 0)
 		return ;
-	else if (mlx->map->lines[x][y + 1] == 'E'
+	else if (mlx->map->lines[y][x + 1] == 'E'
 		&& mlx->map->map_items->C_coin == 0)
 		mlx_loop_end(mlx->ptr);
-	else if (mlx->map->lines[x][y + 1] == 'C')
+	else if (mlx->map->lines[y][x + 1] == 'C')
 	{
-		mlx->map->lines[x][y + 1] = 'P';
-		mlx->map->lines[x][y] = '0';
+		mlx->map->lines[y][x + 1] = 'P';
+		mlx->map->lines[y][x] = '0';
 		mlx->map->map_items->C_coin--;
 	}
-	else if (mlx->map->lines[x][y + 1] == '0')
+	else if (mlx->map->lines[y][x + 1] == '0')
 	{
-		mlx->map->lines[x][y + 1] = 'P';
-		mlx->map->lines[x][y] = '0';
+		mlx->map->lines[y][x + 1] = 'P';
+		mlx->map->lines[y][x] = '0';
 	}
 	mlx->move_count++;
 	render_map(mlx->map->lines, mlx);
+	update_cam(mlx);
 }
 
 void	move_left(t_data *mlx)
@@ -280,26 +245,57 @@ void	move_left(t_data *mlx)
 	int	y;
 
 	get_coordinates(mlx->map->lines, &x, &y);
-	if (mlx->map->lines[x][y - 1] == '1')
+	if (mlx->map->lines[y][x - 1] == '1')
 		return ;
-	if (mlx->map->lines[x][y - 1] == 'E' && mlx->map->map_items->C_coin != 0)
+	if (mlx->map->lines[y][x - 1] == 'E' && mlx->map->map_items->C_coin != 0)
 		return ;
-	else if (mlx->map->lines[x][y - 1] == 'E'
+	else if (mlx->map->lines[y][x - 1] == 'E'
 		&& mlx->map->map_items->C_coin == 0)
 		mlx_loop_end(mlx->ptr);
-	else if (mlx->map->lines[x][y - 1] == 'C')
+	else if (mlx->map->lines[y][x - 1] == 'C')
 	{
-		mlx->map->lines[x][y - 1] = 'P';
-		mlx->map->lines[x][y] = '0';
+		mlx->map->lines[y][x - 1] = 'P';
+		mlx->map->lines[y][x] = '0';
 		mlx->map->map_items->C_coin--;
 	}
-	else if (mlx->map->lines[x][y - 1] == '0')
+	else if (mlx->map->lines[y][x - 1] == '0')
 	{
-		mlx->map->lines[x][y - 1] = 'P';
-		mlx->map->lines[x][y] = '0';
+		mlx->map->lines[y][x - 1] = 'P';
+		mlx->map->lines[y][x] = '0';
 	}
 	mlx->move_count++;
 	render_map(mlx->map->lines, mlx);
+	update_cam(mlx);
+}
+
+void	init_cam(t_data *mlx)
+{
+	mlx->cam_x = 0;
+	mlx->cam_y = 0;
+	mlx->cam_height = 10;
+	mlx->cam_length = 20;
+	if (mlx->cam_length > mlx->map->length)
+		mlx->cam_length = mlx->map->length;
+	if (mlx->cam_height > mlx->map->height)
+		mlx->cam_height = mlx->map->height;
+}
+
+void	update_cam(t_data *mlx)
+{
+	int	x;
+	int	y;
+
+	get_coordinates(mlx->map->lines, &x, &y);
+	mlx->cam_x = x - (mlx->cam_length / 2);
+	mlx->cam_y = y - (mlx->cam_height / 2);
+	if (mlx->cam_x < 0)
+		mlx->cam_x = 0;
+	if (mlx->cam_y < 0)
+		mlx->cam_y = 0;
+	if (mlx->cam_y + mlx->cam_height > mlx->map->height)
+		mlx->cam_y = mlx->map->height - mlx->cam_height;
+	if (mlx->cam_x + mlx->cam_length > mlx->map->length)
+		mlx->cam_x = mlx->map->length - mlx->cam_length; 
 }
 
 int	main(int ac, char **av)
@@ -315,7 +311,6 @@ int	main(int ac, char **av)
 		my_mlx_init(mlx);
 		init_window(mlx);
 		render_map(mlx->map->lines, mlx);
-		// mlx.win = mlx_new_window(mlx.ptr, 1920, 1080, "So long");
 		mlx_key_hook(mlx->win, on_keypress, mlx);
 		mlx_hook(mlx->win, 17, 0, free_all, mlx);
 		mlx_loop(mlx->ptr);

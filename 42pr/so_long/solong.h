@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solong.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:25:31 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/28 15:32:44 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/03/01 17:21:07 by hasnawww         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,10 @@ typedef struct s_data {
 	int		img_y;
 	int		move_count;
 	int		first_token;
+	int		cam_x;
+	int		cam_y;
+	int		cam_length;
+	int		cam_height;
 	t_map	*map;
 }	t_data;
 
@@ -92,5 +96,7 @@ void	move_left(t_data *mlx);
 void	move_up(t_data *mlx);
 void	move_down(t_data *mlx);
 void	move_writing(t_data *mlx);
+void	update_cam(t_data *mlx);
+void	init_cam(t_data *mlx);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasnawww <hasnawww@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:20:50 by hasnawww          #+#    #+#             */
-/*   Updated: 2025/02/28 01:23:50 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/03/02 02:29:41 by hasnawww         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,16 +177,12 @@ void	check_characters(t_map *map)
 			else if (duplicate_characters(map->lines[i][j], &E_coin, &P_coin))
 				j++;
 			else
-			{
 				ft_error(map, BAD_SYMBOL);
-			}
 		}
 		i++;
 	}
 	if (E_coin == 0|| P_coin == 0 || C_coin == 0)
-	{
 		ft_error(map, MISSING_SYMBOL);
-	}
 }
 
 int	is_rectangular(t_map *map)
