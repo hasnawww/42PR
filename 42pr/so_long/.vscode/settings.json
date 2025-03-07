@@ -3,6 +3,7 @@
 		"initializer_list": "c",
 		"errordef.h": "c",
 		"solong.h": "c",
-		"errordefbonus.h": "c"
+		"errordefbonus.h": "c",
+		"solongbonus.h": "c"
 	}
 }

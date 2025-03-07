@@ -6,7 +6,7 @@
 /*   By: ilhasnao <ilhasnao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 07:38:04 by ilhasnao          #+#    #+#             */
-/*   Updated: 2025/03/06 09:36:47 by ilhasnao         ###   ########.fr       */
+/*   Updated: 2025/03/07 17:42:55 by ilhasnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define LIBFT_H
 
 # include <stdlib.h>
-# include "../solong.h"
+# include "../includes/solong.h"
 # include "get_next_line.h"
 
 int		ft_atoi(const char *str);
